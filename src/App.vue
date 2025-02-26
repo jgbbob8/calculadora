@@ -41,22 +41,54 @@ function toggleTheme() {
         <div class="logo">
           <img src="@/assets/ConsNaval.png" alt="" />
         </div>
-        <div class="switches">
+        <v-row class="bg-surface-variant mb-6 pa-8 ga-4 rounded">
           <BtnToggle estancia="Comedor" @toggle="toggleComedor" />
           <BtnToggle estancia="Cocina" @toggle="toggleCocina" />
           <BtnToggle estancia="Baño 1" @toggle="toggleBano1" />
           <BtnToggle estancia="Baño 2" @toggle="toggleBano2" />
           <BtnToggleMultiple estancia="Habitaciones" @toggle="toggleHabit" />
-        </div>
+        </v-row>
 
-        <div v-if="comedor === 'si'" class="estancia">Comedor</div>
-        <div v-if="cocina === 'si'" class="estancia">Cocina</div>
-        <div v-if="bano1 === 'si'" class="estancia">Baño Principal</div>
-        <div v-if="bano2 === 'si'" class="estancia">Baño cortesia</div>
-        <div v-if="habit > 0" class="estancia">Habitación 1</div>
-        <div v-if="habit > 1" class="estancia">Habitación 2</div>
-        <div v-if="habit > 2" class="estancia">Habitación 3</div>
-        <div v-if="habit > 3" class="estancia">Habitación 4</div>
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="comedor === 'si'"
+          >Comedor</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="cocina === 'si'"
+          >Cocina</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="bano1 === 'si'"
+          >Baño Principal</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="bano2 === 'si'"
+          >Baño cortesia</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="habit > 0"
+          >Habitación 1</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="habit > 1"
+          >Habitación 2</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="habit > 2"
+          >Habitación 3</v-row
+        >
+        <v-row
+          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          v-if="habit > 3"
+          >Habitación 4</v-row
+        >
       </v-container>
     </v-main>
     <AppFooter />
@@ -71,11 +103,7 @@ function toggleTheme() {
 .logo img {
   max-width: 250px;
 }
-.switches {
-  display: flex;
-  justify-content: center;
-  gap: 1em;
-}
+
 .estancia {
   width: 100%;
   height: 100px;
