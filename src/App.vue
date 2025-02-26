@@ -1,36 +1,24 @@
 <script setup>
 import { ref } from "vue";
-import BtnToggle from "./components/ui/BtnToggle.vue";
-import BtnToggleMultiple from "./components/ui/BtnToggleMultiple.vue";
+import BtnToggle from "./components/BtnToggle.vue";
+import BtnToggleMultiple from "./components/BtnToggleMultiple.vue";
+import estancias from "./components/Estancias.vue";
+import { useCustomTheme } from "./useTheme";
+import Estancias from "./components/Estancias.vue";
 
-const comedor = ref("no");
-const cocina = ref("no");
-const bano1 = ref("no");
-const bano2 = ref("no");
-const habit = ref("no");
-const toggleComedor = (valor) => {
-  comedor.value = valor;
-};
-const toggleCocina = (valor) => {
-  cocina.value = valor;
-};
-const toggleBano1 = (valor) => {
-  bano1.value = valor;
-};
-const toggleBano2 = (valor) => {
-  bano2.value = valor;
-};
-const toggleHabit = (valor) => {
-  habit.value = valor;
-};
+const { theme, toggleTheme } = useCustomTheme();
 
-import { useTheme } from "vuetify";
+const state = ref({
+  comedor: "no",
+  cocina: "no",
+  bano1: "no",
+  bano2: "no",
+  habit: 0,
+});
 
-const theme = useTheme();
-
-function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
-}
+const toggleState = (key, value) => {
+  state.value[key] = value;
+};
 </script>
 
 <template>
@@ -42,55 +30,31 @@ function toggleTheme() {
           <img src="@/assets/ConsNaval.png" alt="" />
         </div>
         <v-row
-          class="bg-surface-light mb-6 pa-4 ga-4 rounded text-center justify-center"
+          class="bg-surface-light mb-10 pa-4 ga-4 rounded text-center justify-center"
         >
-          <BtnToggle estancia="Comedor" @toggle="toggleComedor" />
-          <BtnToggle estancia="Cocina" @toggle="toggleCocina" />
-          <BtnToggle estancia="Baño 1" @toggle="toggleBano1" />
-          <BtnToggle estancia="Baño 2" @toggle="toggleBano2" />
-          <BtnToggleMultiple estancia="Habitaciones" @toggle="toggleHabit" />
+          <BtnToggle
+            estancia="Comedor"
+            @toggle="(valor) => toggleState('comedor', valor)"
+          />
+          <BtnToggle
+            estancia="Cocina"
+            @toggle="(valor) => toggleState('cocina', valor)"
+          />
+          <BtnToggle
+            estancia="Baño 1"
+            @toggle="(valor) => toggleState('bano1', valor)"
+          />
+          <BtnToggle
+            estancia="Baño 2"
+            @toggle="(valor) => toggleState('bano2', valor)"
+          />
+          <BtnToggleMultiple
+            estancia="Habitaciones"
+            @toggle="(valor) => toggleState('habit', valor)"
+          />
         </v-row>
 
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="comedor === 'si'"
-          >Comedor</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="cocina === 'si'"
-          >Cocina</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="bano1 === 'si'"
-          >Baño Principal</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="bano2 === 'si'"
-          >Baño cortesia</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="habit > 0"
-          >Habitación 1</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="habit > 1"
-          >Habitación 2</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="habit > 2"
-          >Habitación 3</v-row
-        >
-        <v-row
-          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-          v-if="habit > 3"
-          >Habitación 4</v-row
-        >
+        <Estancias :state="state" />
       </v-container>
     </v-main>
     <AppFooter />
@@ -104,13 +68,5 @@ function toggleTheme() {
 }
 .logo img {
   max-width: 250px;
-}
-
-.estancia {
-  width: 100%;
-  height: 100px;
-  background-color: #ccc;
-  color: #333;
-  margin-block: 1em;
 }
 </style>
