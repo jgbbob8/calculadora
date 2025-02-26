@@ -41,7 +41,9 @@ function toggleTheme() {
         <div class="logo">
           <img src="@/assets/ConsNaval.png" alt="" />
         </div>
-        <v-row class="bg-surface-variant mb-6 pa-8 ga-4 rounded">
+        <v-row
+          class="bg-surface-light mb-6 pa-4 ga-4 rounded text-center justify-center"
+        >
           <BtnToggle estancia="Comedor" @toggle="toggleComedor" />
           <BtnToggle estancia="Cocina" @toggle="toggleCocina" />
           <BtnToggle estancia="Baño 1" @toggle="toggleBano1" />
@@ -50,42 +52,42 @@ function toggleTheme() {
         </v-row>
 
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="comedor === 'si'"
           >Comedor</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="cocina === 'si'"
           >Cocina</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="bano1 === 'si'"
           >Baño Principal</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="bano2 === 'si'"
           >Baño cortesia</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="habit > 0"
           >Habitación 1</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="habit > 1"
           >Habitación 2</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="habit > 2"
           >Habitación 3</v-row
         >
         <v-row
-          class="bg-surface-variant mb-6 pa-8 ga-4 rounded"
+          class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
           v-if="habit > 3"
           >Habitación 4</v-row
         >
