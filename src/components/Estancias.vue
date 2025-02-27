@@ -8,22 +8,22 @@ defineProps({
   <div>
     <v-row
       class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.comedor === 'si'"
+      v-if="state.comedor === true"
       >Comedor</v-row
     >
     <v-row
       class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.cocina === 'si'"
+      v-if="state.cocina === true"
       >Cocina</v-row
     >
     <v-row
       class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.bano1 === 'si'"
+      v-if="state.bano1 === true"
       >Baño Principal</v-row
     >
     <v-row
       class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.bano2 === 'si'"
+      v-if="state.bano2 === true"
       >Baño Cortesia</v-row
     >
 

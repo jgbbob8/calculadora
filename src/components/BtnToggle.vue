@@ -6,7 +6,7 @@ const props = defineProps({
 });
 const estancia = props.estancia;
 
-const verifi = ref("no");
+const verifi = ref(false);
 
 const emit = defineEmits(["toggle"]);
 watch(verifi, (nuevoValor) => {
@@ -17,9 +17,9 @@ watch(verifi, (nuevoValor) => {
 <template>
   <div class="btn-toggle">
     <p class="pb-2">{{ estancia }}</p>
-    <v-btn-toggle v-model="verifi" rounded="6" value="no" mandatory>
-      <v-btn size="small" value="no" color="red">NO</v-btn>
-      <v-btn size="small" value="si" color="success">SI</v-btn>
+    <v-btn-toggle v-model="verifi" rounded="6" mandatory>
+      <v-btn size="small" :value="false" color="red">NO</v-btn>
+      <v-btn size="small" :value="true" color="success">SI</v-btn>
     </v-btn-toggle>
   </div>
 </template>

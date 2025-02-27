@@ -8,10 +8,10 @@ import Estancias from "./components/Estancias.vue";
 const { theme, toggleTheme } = useCustomTheme();
 
 const state = ref({
-  comedor: "no",
-  cocina: "no",
-  bano1: "no",
-  bano2: "no",
+  comedor: false,
+  cocina: false,
+  bano1: false,
+  bano2: false,
   habit: 0,
 });
 
