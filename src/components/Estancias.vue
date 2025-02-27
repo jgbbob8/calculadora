@@ -1,51 +1,32 @@
 <script setup>
+import Estancia from "./Estancia.vue";
+
 defineProps({
   state: Object,
 });
+
+const estancias = [
+  { key: "comedor", nombre: "Comedor" },
+  { key: "cocina", nombre: "Cocina" },
+  { key: "bano1", nombre: "Baño Principal" },
+  { key: "bano2", nombre: "Baño Cortesía" },
+];
 </script>
 
 <template>
   <div>
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.comedor === true"
-      >Comedor</v-row
-    >
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.cocina === true"
-      >Cocina</v-row
-    >
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.bano1 === true"
-      >Baño Principal</v-row
-    >
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.bano2 === true"
-      >Baño Cortesia</v-row
-    >
+    <Estancia
+      v-for="estancia in estancias"
+      :key="estancia.key"
+      :nombre="estancia.nombre"
+      :visible="state[estancia.key]"
+    />
 
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.habit > 0"
-      >Habitación 1</v-row
-    >
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.habit > 1"
-      >Habitación 2</v-row
-    >
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.habit > 2"
-      >Habitación 3</v-row
-    >
-    <v-row
-      class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
-      v-if="state.habit > 3"
-      >Habitación 4</v-row
-    >
+    <Estancia
+      v-for="n in 4"
+      :key="`habitacion-${n}`"
+      :nombre="`Habitación ${n}`"
+      :visible="state.habit >= n"
+    />
   </div>
 </template>
