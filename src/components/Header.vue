@@ -4,9 +4,19 @@ const { theme, toggleTheme } = useCustomTheme();
 </script>
 
 <template>
-  <v-btn @click="toggleTheme" class="btn-toogle">{{
-    theme.global.name.value
-  }}</v-btn>
+  <div class="btn-toogle">
+    <v-icon
+      v-if="theme.global.name.value === 'dark'"
+      @click="toggleTheme"
+      icon="$radioOff"
+    />
+    <v-icon
+      v-if="theme.global.name.value === 'light'"
+      @click="toggleTheme"
+      icon="$radioOn"
+    />
+  </div>
+
   <div class="logo">
     <img
       v-if="theme.global.name.value === 'dark'"
@@ -19,9 +29,7 @@ const { theme, toggleTheme } = useCustomTheme();
 
 <style scoped>
 .btn-toogle {
-  display: block;
-  margin-left: auto;
-  margin-right: 0;
+  text-align: right;
 }
 .logo {
   text-align: center;
