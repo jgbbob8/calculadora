@@ -1,4 +1,3 @@
-// En un archivo separado, por ejemplo, useTheme.js
 import { useTheme } from "vuetify";
 
 export function useCustomTheme() {
