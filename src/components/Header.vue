@@ -4,7 +4,9 @@ const { theme, toggleTheme } = useCustomTheme();
 </script>
 
 <template>
-  <v-btn @click="toggleTheme">{{ theme.global.name.value }}</v-btn>
+  <v-btn @click="toggleTheme" class="btn-toogle">{{
+    theme.global.name.value
+  }}</v-btn>
   <div class="logo">
     <img
       v-if="theme.global.name.value === 'dark'"
@@ -16,6 +18,11 @@ const { theme, toggleTheme } = useCustomTheme();
 </template>
 
 <style scoped>
+.btn-toogle {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}
 .logo {
   text-align: center;
   padding-bottom: 2em;
