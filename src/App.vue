@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from "vue";
+import Header from "./components/Header.vue";
 import BtnToggle from "./components/BtnToggle.vue";
 import BtnToggleMultiple from "./components/BtnToggleMultiple.vue";
-import { useCustomTheme } from "./useTheme";
-import Estancias from "./components/Estancias.vue";
 
-const { theme, toggleTheme } = useCustomTheme();
+import Estancias from "./components/Estancias.vue";
 
 const state = ref({
   comedor: false,
@@ -24,10 +23,7 @@ const toggleState = (key, value) => {
   <v-app>
     <v-main>
       <v-container>
-        <v-btn @click="toggleTheme">{{ theme.global.name.value }}</v-btn>
-        <div class="logo">
-          <img src="@/assets/ConsNaval.png" alt="" />
-        </div>
+        <Header />
         <v-row
           class="bg-surface-light mb-10 pa-4 ga-4 rounded text-center justify-center"
         >
@@ -60,12 +56,4 @@ const toggleState = (key, value) => {
   </v-app>
 </template>
 
-<style scoped>
-.logo {
-  text-align: center;
-  padding-bottom: 2em;
-}
-.logo img {
-  max-width: 250px;
-}
-</style>
+<style scoped></style>
