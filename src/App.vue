@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import BtnToggle from "./components/BtnToggle.vue";
 import BtnToggleMultiple from "./components/BtnToggleMultiple.vue";
-import estancias from "./components/Estancias.vue";
 import { useCustomTheme } from "./useTheme";
 import Estancias from "./components/Estancias.vue";
 
@@ -41,11 +40,11 @@ const toggleState = (key, value) => {
             @toggle="(valor) => toggleState('cocina', valor)"
           />
           <BtnToggle
-            estancia="Baño 1"
+            estancia="Baño"
             @toggle="(valor) => toggleState('bano1', valor)"
           />
           <BtnToggle
-            estancia="Baño 2"
+            estancia="Aseo"
             @toggle="(valor) => toggleState('bano2', valor)"
           />
           <BtnToggleMultiple

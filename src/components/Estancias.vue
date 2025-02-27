@@ -24,7 +24,7 @@ defineProps({
     <v-row
       class="bg-surface-variant mb-6 pa-4 ga-4 rounded"
       v-if="state.bano2 === 'si'"
-      >Baño cortesia</v-row
+      >Baño Cortesia</v-row
     >
 
     <v-row
