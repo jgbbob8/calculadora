@@ -56,4 +56,8 @@ const toggleState = (key, value) => {
   </v-app>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-row {
+  margin: 0;
+}
+</style>
