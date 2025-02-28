@@ -45,6 +45,9 @@ const closeAlert = () => {
 </template>
 
 <style scoped>
+.v-row {
+  margin: 0;
+}
 .datos {
   display: flex;
   flex-direction: column;
