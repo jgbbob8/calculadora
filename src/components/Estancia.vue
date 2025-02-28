@@ -25,22 +25,28 @@ const closeAlert = () => {
 </script>
 
 <template>
-  <v-row v-if="visible" class="bg-surface-variant mb-6 pa-4 ga-4 rounded">
-    {{ nombre }}
+  <v-sheet
+    v-if="visible"
+    class="bg-surface-light pa-6 mb-6 ga-4 rounded mx-auto"
+  >
+    <h4 class="text-h5 font-weight-bold mb-4 text-center text-green-lighten-2">
+      {{ nombre }}
+    </h4>
 
     <div class="datos">
       <label>Superficie / m2</label>
       <input type="text" v-model="superficie" :id="`superficie-${nombre}`" />
     </div>
-  </v-row>
+  </v-sheet>
   <v-alert
     v-if="showAlert"
     type="success"
+    color="green-lighten-1"
     dismissible
     closable
     @click:close="closeAlert"
-  >
-    Se eliminarán los datos suministrados para el presupuesto de la estancia
+    >Se han eliminado los datos de la estancia:
+    {{ nombre }}
   </v-alert>
 </template>
 
@@ -54,10 +60,10 @@ const closeAlert = () => {
   gap: 0.5em;
 }
 input {
-  color: grey;
-  background-color: lightgrey;
+  color: #333;
+  background-color: #999;
   padding: 3px 8px;
-  border: solid 1px grey;
   border-radius: 5px;
+  max-width: 150px;
 }
 </style>
