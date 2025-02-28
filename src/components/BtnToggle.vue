@@ -9,7 +9,7 @@ const estancia = props.estancia;
 const verifi = ref(false);
 
 const emit = defineEmits(["toggle"]);
-watch(verifi, (nuevoValor) => {
+watch(verifi, (nuevoValor, viejoValor) => {
   emit("toggle", nuevoValor);
 });
 </script>
