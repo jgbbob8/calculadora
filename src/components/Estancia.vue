@@ -258,7 +258,7 @@ input[type="number"],
 input[type="text"] {
   color: #333;
   background-color: #ccc;
-  padding: 3px 8px;
+  padding: 2px 5px;
   border-radius: 5px;
 
   border: none;
