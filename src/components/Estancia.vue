@@ -407,8 +407,9 @@ input[type="text"] {
 }
 
 .superficie-info {
-  color: #666;
+  color: #ccc;
   font-style: italic;
+  margin-left: 24px;
 }
 
 @media (width < 427px) {
