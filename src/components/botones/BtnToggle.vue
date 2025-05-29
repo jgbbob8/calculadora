@@ -24,4 +24,8 @@ watch(verifi, (nuevoValor, viejoValor) => {
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.v-btn__content {
+  font-size: initial !important;
+}
+</style>
