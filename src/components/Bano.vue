@@ -38,16 +38,6 @@ const closeAlert = () => {
       <input type="text" v-model="superficie" :id="`superficie-${nombre}`" />
     </div>
   </v-sheet>
-  <v-alert
-    v-if="showAlert"
-    type="success"
-    color="green-lighten-1"
-    dismissible
-    closable
-    @click:close="closeAlert"
-    >Se han eliminado los datos de la estancia:
-    {{ nombre }}
-  </v-alert>
 </template>
 
 <style scoped>

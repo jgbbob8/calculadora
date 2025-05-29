@@ -1,5 +1,8 @@
 <script setup>
-import Estancia from "./Estancia.vue";
+import Comedor from "./Comedor.vue";
+import Cocina from "./Cocina.vue";
+import Bano from "./Bano.vue";
+import Habitacion from "./Habitacion.vue";
 
 defineProps({
   state: Object,
@@ -8,22 +11,21 @@ defineProps({
 const estancias = [
   { key: "comedor", nombre: "Comedor" },
   { key: "cocina", nombre: "Cocina" },
-  { key: "bano1", nombre: "Baño Principal" },
-  { key: "bano2", nombre: "Baño Cortesía" },
 ];
 </script>
 
 <template>
   <div>
-    <Estancia
-      v-for="estancia in estancias"
-      :key="estancia.key"
-      :nombre="estancia.nombre"
-      :visible="state[estancia.key]"
+    <Comedor :nombre="`Comedor / Salón`" :visible="state.comedor" />
+    <Cocina :nombre="`Cocina`" :visible="state.cocina" />
+    <Bano
+      v-for="n in 3"
+      :key="`baño-${n}`"
+      :nombre="`Baño ${n}`"
+      :visible="state.bano >= n"
     />
-
-    <Estancia
-      v-for="n in 4"
+    <Habitacion
+      v-for="n in 5"
       :key="`habitacion-${n}`"
       :nombre="`Habitación ${n}`"
       :visible="state.habit >= n"

@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref, watch } from "vue";
 
 const props = defineProps({
@@ -27,4 +27,66 @@ watch(verifi, (nuevoValor) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped></style> -->
+
+<script setup>
+import { ref, watch } from "vue";
+
+const props = defineProps({
+  estancia: String,
+  maximum: Number,
+});
+const estancia = props.estancia;
+const maxim = props.maximum;
+
+console.log(maxim);
+
+const verifi = ref("no");
+
+const emit = defineEmits(["toggle"]);
+
+watch(verifi, (nuevoValor) => {
+  emit("toggle", nuevoValor);
+});
+
+const incrementar = () => {
+  if (verifi.value === "no") {
+    verifi.value = "1";
+  } else if (verifi.value < { maxim }) {
+    verifi.value = String(Number(verifi.value) + 1);
+  }
+};
+
+const decrementar = () => {
+  if (verifi.value > "1") {
+    verifi.value = String(Number(verifi.value) - 1);
+  } else if (verifi.value === "1") {
+    verifi.value = "no";
+  }
+};
+</script>
+
+<template>
+  <div class="btn-toggle">
+    <p class="pb-2">{{ estancia }}</p>
+    <v-btn-toggle rounded="6" mandatory>
+      <v-btn
+        size="small"
+        color="red"
+        @click="decrementar"
+        :disabled="verifi === 'no'"
+        >-</v-btn
+      >
+      <v-btn size="small" :value="false" color="red">
+        {{ verifi === "no" ? "NO" : verifi }}</v-btn
+      >
+      <v-btn
+        size="small"
+        color="success"
+        @click="incrementar"
+        :disabled="verifi === maxim"
+        >+</v-btn
+      >
+    </v-btn-toggle>
+  </div>
+</template>

@@ -3,14 +3,14 @@ import { ref } from "vue";
 import Header from "./components/Header.vue";
 import BtnToggle from "./components/BtnToggle.vue";
 import BtnToggleMultiple from "./components/BtnToggleMultiple.vue";
+import padre from "./components/padre.vue";
 
 import Estancias from "./components/Estancias.vue";
 
 const state = ref({
   comedor: false,
   cocina: false,
-  bano1: false,
-  bano2: false,
+  bano: 0,
   habit: 0,
 });
 
@@ -35,16 +35,14 @@ const toggleState = (key, value) => {
             estancia="Cocina"
             @toggle="(valor) => toggleState('cocina', valor)"
           />
-          <BtnToggle
-            estancia="Baño"
-            @toggle="(valor) => toggleState('bano1', valor)"
-          />
-          <BtnToggle
-            estancia="Aseo"
-            @toggle="(valor) => toggleState('bano2', valor)"
+          <BtnToggleMultiple
+            estancia="Baños"
+            maximum="3"
+            @toggle="(valor) => toggleState('bano', valor)"
           />
           <BtnToggleMultiple
             estancia="Habitaciones"
+            maximum="5"
             @toggle="(valor) => toggleState('habit', valor)"
           />
         </v-row>
@@ -56,8 +54,9 @@ const toggleState = (key, value) => {
   </v-app>
 </template>
 
+<!--
 <style scoped>
 .v-row {
   margin: 0;
 }
-</style>
+</style> -->
