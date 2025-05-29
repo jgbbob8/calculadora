@@ -90,8 +90,7 @@ const formatoMoneda = (valor) => {
   />
   <Estancia
     v-for="n in 3"
-    :key="`bano-${n}`"
-    :clave="`bano_${n}`"
+    :clave="`bano`"
     :nombre="`Baño ${n}`"
     :visible="state.bano >= n"
     :elementosEstancia="elementosEstanciaOrganizados.bano"
@@ -103,8 +102,7 @@ const formatoMoneda = (valor) => {
   />
   <Estancia
     v-for="n in 5"
-    :key="`habitacion-${n}`"
-    :clave="`habitacion_${n}`"
+    :clave="`habitacion`"
     :nombre="`Habitación ${n}`"
     :visible="state.habit >= n"
     :elementosEstancia="elementosEstanciaOrganizados.habitacion"
@@ -119,7 +117,7 @@ const formatoMoneda = (valor) => {
 <style scoped>
 /* Añade algunos estilos si quieres */
 .total-presupuesto {
-  font-size: 1.5em;
+  font-size: clamp(1.1rem, 0.612vw + 0.978rem, 1.5rem);
   text-align: right;
   margin: 1em 2em;
   opacity: 0.5;

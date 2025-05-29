@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, defineProps, defineEmits } from "vue";
+import { ref, watch, computed } from "vue";
 import { datosReforma } from "@/data/costes.js";
 
 // --- Props que el componente Estancia recibe del padre ---
@@ -290,7 +290,7 @@ const formatoMoneda = (valor) => {
 
 .titulo {
   text-transform: uppercase;
-  font-size: 2.5em;
+  font-size: clamp(1rem, 2.294vw + 0.541rem, 2.5rem);
   font-weight: bold;
   color: #2aa8e0;
   /* background: linear-gradient(90deg, #f39200, #999, #2aa8e0);
@@ -301,12 +301,12 @@ const formatoMoneda = (valor) => {
 }
 
 span.total-presupuesto {
-  padding: 0.25em 2em;
+  padding: 0.25em clamp(1rem, 1.53vw + 0.694rem, 2rem);
   background: #ffffff20;
   border-radius: 5px;
 }
 .total-presupuesto {
-  font-size: 1.5em;
+  font-size: clamp(1.1rem, 0.612vw + 0.978rem, 1.5rem);
   margin-left: auto;
 }
 
@@ -317,7 +317,9 @@ span.total-presupuesto {
 .flex {
   display: flex;
   flex-direction: row;
-  gap: 2em;
+  column-gap: 2em;
+  row-gap: 1em;
+  flex-wrap: wrap;
 }
 
 .datos {
@@ -405,5 +407,18 @@ input[type="text"] {
 .superficie-info {
   color: #666;
   font-style: italic;
+}
+
+@media (width < 427px) {
+  .categoria-elementos {
+    grid-template-columns: repeat(auto-fill, minmax(244px, 1fr));
+  }
+  input[type="number"],
+  input[type="text"] {
+    max-width: 100%;
+  }
+  .datos {
+    width: 100%;
+  }
 }
 </style>
