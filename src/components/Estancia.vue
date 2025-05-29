@@ -190,7 +190,6 @@ const formatoMoneda = (valor) => {
                 type="number"
                 v-model.number="cantidades[elemento.concepto]"
                 min="0"
-                step="0.01"
                 class="cantidad-input"
                 :placeholder="'Introduce m²'"
               />
@@ -209,7 +208,6 @@ const formatoMoneda = (valor) => {
                 type="number"
                 v-model.number="cantidades[elemento.concepto]"
                 min="0"
-                step="0.01"
                 class="cantidad-input"
                 :placeholder="'Introduce ml'"
               />
