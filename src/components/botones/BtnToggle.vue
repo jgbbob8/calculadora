@@ -26,6 +26,6 @@ watch(verifi, (nuevoValor, viejoValor) => {
 
 <style>
 .v-btn__content {
-  font-size: initial !important;
+  font-size: initial;
 }
 </style>
