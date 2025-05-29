@@ -15,8 +15,6 @@ const emit = defineEmits(["update:totalEstancia"]);
 // --- Estado local y computed properties de la estancia ---
 const estancia = ref(props.clave);
 const estancia_nombre = ref(props.nombre);
-const superficie = ref("");
-const longitud = ref("");
 
 // Función para obtener elementos por ubicación organizados por categoría
 const obtenerElementosPorUbicacionOrganizados = (ubicacion) => {
@@ -61,18 +59,13 @@ const inicializarEstados = () => {
   Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
     categoria.forEach((elemento) => {
       elementosSeleccionados.value[elemento.concepto] = false;
-      cantidades.value[elemento.concepto] =
-        elemento.unidad.includes("m2") || elemento.unidad.includes("ml")
-          ? 0
-          : 1;
+      cantidades.value[elemento.concepto] = 1;
     });
   });
 };
 
 // Función para resetear todos los valores
 const resetearTodosLosValores = () => {
-  superficie.value = "";
-  longitud.value = "";
   inicializarEstados();
 };
 
@@ -85,22 +78,7 @@ const totalPresupuesto = computed(() => {
   Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
     categoria.forEach((elemento) => {
       if (elementosSeleccionados.value[elemento.concepto]) {
-        let cantidad;
-        if (
-          elemento.unidad.includes("m2") &&
-          superficie.value !== null &&
-          superficie.value !== ""
-        ) {
-          cantidad = parseFloat(superficie.value);
-        } else if (
-          elemento.unidad.includes("ml") &&
-          longitud.value !== null &&
-          longitud.value !== ""
-        ) {
-          cantidad = parseFloat(longitud.value);
-        } else {
-          cantidad = cantidades.value[elemento.concepto];
-        }
+        const cantidad = cantidades.value[elemento.concepto];
 
         if (!isNaN(cantidad) && typeof elemento.precio === "number") {
           total += elemento.precio * cantidad;
@@ -119,48 +97,6 @@ watch(
   },
   { immediate: true }
 );
-
-// Watch para la superficie (para elementos que dependen de m2)
-watch(superficie, (newVal) => {
-  if (newVal) {
-    Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
-      categoria.forEach((elemento) => {
-        if (elemento.unidad.includes("m2")) {
-          cantidades.value[elemento.concepto] = parseFloat(newVal) || 0;
-        }
-      });
-    });
-  } else {
-    Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
-      categoria.forEach((elemento) => {
-        if (elemento.unidad.includes("m2")) {
-          cantidades.value[elemento.concepto] = 0;
-        }
-      });
-    });
-  }
-});
-
-// Watch para la longitud (para elementos que dependen de ml)
-watch(longitud, (newVal) => {
-  if (newVal) {
-    Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
-      categoria.forEach((elemento) => {
-        if (elemento.unidad.includes("ml")) {
-          cantidades.value[elemento.concepto] = parseFloat(newVal) || 0;
-        }
-      });
-    });
-  } else {
-    Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
-      categoria.forEach((elemento) => {
-        if (elemento.unidad.includes("ml")) {
-          cantidades.value[elemento.concepto] = 0;
-        }
-      });
-    });
-  }
-});
 
 // Watch simplificado para cuando la estancia se oculta
 watch(
@@ -193,20 +129,6 @@ const formatoMoneda = (valor) => {
       </span>
     </div>
 
-    <div class="flex">
-      <div class="datos">
-        <label>Superficie<span class="divisor"> | </span>m2</label>
-        <input
-          type="number"
-          v-model="superficie"
-          :id="`superficie-${nombre}`"
-        />
-      </div>
-      <div class="datos">
-        <label>Longitud<span class="divisor"> | </span>ml</label>
-        <input type="number" v-model="longitud" :id="`longitud-${nombre}`" />
-      </div>
-    </div>
     <div class="elementos-estancia mt-4">
       <div
         v-for="(elementos, nombreCategoria) in elementosEstanciaOrganizados"
@@ -237,6 +159,7 @@ const formatoMoneda = (valor) => {
               </label>
             </div>
 
+            <!-- Input para cantidad (elementos que no son m2 ni ml) -->
             <div
               v-if="
                 elementosSeleccionados[elemento.concepto] &&
@@ -254,25 +177,42 @@ const formatoMoneda = (valor) => {
               />
             </div>
 
+            <!-- Input para superficie (elementos con m2) -->
             <div
               v-if="
                 elementosSeleccionados[elemento.concepto] &&
                 elemento.unidad.includes('m2')
               "
-              class="superficie-info"
+              class="superficie-control"
             >
-              <span class="text-caption"
-                >Superficie: {{ superficie || 0 }} m²</span
-              >
+              <label>Superficie (m²):</label>
+              <input
+                type="number"
+                v-model.number="cantidades[elemento.concepto]"
+                min="0"
+                step="0.01"
+                class="cantidad-input"
+                :placeholder="'Introduce m²'"
+              />
             </div>
+
+            <!-- Input para longitud (elementos con ml) -->
             <div
               v-if="
                 elementosSeleccionados[elemento.concepto] &&
                 elemento.unidad.includes('ml')
               "
-              class="longitud-info"
+              class="longitud-control"
             >
-              <span class="text-caption">Longitud: {{ longitud || 0 }} ml</span>
+              <label>Longitud (ml):</label>
+              <input
+                type="number"
+                v-model.number="cantidades[elemento.concepto]"
+                min="0"
+                step="0.01"
+                class="cantidad-input"
+                :placeholder="'Introduce ml'"
+              />
             </div>
           </div>
         </div>
@@ -285,7 +225,7 @@ const formatoMoneda = (valor) => {
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .titulo {
@@ -297,7 +237,7 @@ const formatoMoneda = (valor) => {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; */
-  margin: auto;
+  /* margin: auto; */
 }
 
 span.total-presupuesto {
@@ -314,43 +254,25 @@ span.total-presupuesto {
   margin: 0;
 }
 
-.flex {
-  display: flex;
-  flex-direction: row;
-  column-gap: 2em;
-  row-gap: 1em;
-  flex-wrap: wrap;
-}
-
-.datos {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
 input[type="number"],
 input[type="text"] {
   color: #333;
   background-color: #ccc;
   padding: 3px 8px;
   border-radius: 5px;
-  max-width: 150px;
+
   border: none;
 }
 
 .categoria-section {
   padding-block: 1em;
-  border-bottom: 1px solid #ffffff13;
+  border-bottom: 1px solid #ffffff20;
 }
 .categoria-section:last-child {
   border-bottom: none;
 }
 
 .categoria-titulo {
-  /* background: linear-gradient(90deg, #f39200, #999, #2aa8e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
   color: #f39200;
   padding-bottom: 4px;
   text-transform: uppercase;
@@ -389,21 +311,19 @@ input[type="text"] {
   cursor: pointer;
 }
 
-.elemento-precio {
-  color: #2e7d32;
-  font-weight: bold;
-}
-
-.cantidad-control {
+.cantidad-control,
+.superficie-control,
+.longitud-control {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: 5px;
   margin-left: 24px;
 }
 
 .cantidad-input {
-  max-width: 80px;
+  max-width: 60px;
 }
 
 .superficie-info {
@@ -412,16 +332,9 @@ input[type="text"] {
   margin-left: 24px;
 }
 
-@media (width < 427px) {
+@media (width < 400px) {
   .categoria-elementos {
     grid-template-columns: repeat(auto-fill, minmax(244px, 1fr));
-  }
-  input[type="number"],
-  input[type="text"] {
-    max-width: 100%;
-  }
-  .datos {
-    width: 100%;
   }
 }
 </style>
