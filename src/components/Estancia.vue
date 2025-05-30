@@ -122,30 +122,36 @@ const formatoMoneda = (valor) => {
     v-if="visible"
     class="bg-surface-light pa-6 mb-6 ga-4 rounded mx-auto"
   >
-    <div class="titular">
-      <span class="titulo">{{ nombre }}</span>
-      <span class="total-presupuesto">
+    <div class="d-flex align-center mb-4">
+      <h2 class="text-h5 text-sm-h3 font-weight-bold text-blue">
+        {{ nombre }}
+      </h2>
+      <p
+        class="bg-grey-darken-2 rounded pl-6 pr-6 pt-2 pb-2 text-sm-h6 text-subtitle-1 ml-auto"
+      >
         Total: {{ formatoMoneda(totalPresupuesto) }}€
-      </span>
+      </p>
     </div>
 
-    <div class="elementos-estancia mt-4">
+    <div class="elementos-estancia mt-4 pb-4">
       <div
         v-for="(elementos, nombreCategoria) in elementosEstanciaOrganizados"
         :key="nombreCategoria"
-        class="categoria-section"
+        class="categoria-section pt-4 pb-4"
       >
-        <h6 class="categoria-titulo">
+        <h6 class="text-orange text-uppercase text-subtitle-1 pb-2">
           {{ nombresCategorias[nombreCategoria] || nombreCategoria }}
         </h6>
 
-        <div class="categoria-elementos">
-          <div
+        <v-row class="mb-4 align-content-lg-center">
+          <v-col
+            cols="12"
+            lg="4"
+            sm="6"
             v-for="elemento in elementos"
             :key="elemento.concepto"
-            class="elemento-item"
           >
-            <div class="elemento-header">
+            <div class="flex justify-space-between items-center">
               <label class="checkbox-label">
                 <input
                   type="checkbox"
@@ -153,28 +159,30 @@ const formatoMoneda = (valor) => {
                   class="checkbox-input"
                 />
                 <p class="elemento-nombre">
-                  {{ elemento.concepto }}<span class="divisor"> | </span
+                  {{ elemento.concepto
+                  }}<span class="text-orange opacity-80"> | </span
                   >{{ elemento.unidad }}
                 </p>
               </label>
             </div>
 
-            <!-- Input para cantidad (elementos que no son m2 ni ml) -->
+            <!-- Input para cantidad (elementos que no son m2 ni m) -->
             <div
               v-if="
                 elementosSeleccionados[elemento.concepto] &&
                 !elemento.unidad.includes('m2') &&
-                !elemento.unidad.includes('ml')
+                !elemento.unidad.includes('m')
               "
-              class="cantidad-control"
             >
-              <label>Cantidad:</label>
-              <input
+              <v-text-field
+                density="compact"
+                label="Cantidad"
                 type="number"
-                v-model.number="cantidades[elemento.concepto]"
-                min="1"
-                class="cantidad-input"
-              />
+                min="0"
+                single-line
+                variant="outlined"
+                v-model="cantidades[elemento.concepto]"
+              ></v-text-field>
             </div>
 
             <!-- Input para superficie (elementos con m2) -->
@@ -183,116 +191,59 @@ const formatoMoneda = (valor) => {
                 elementosSeleccionados[elemento.concepto] &&
                 elemento.unidad.includes('m2')
               "
-              class="superficie-control"
             >
-              <label>Superficie (m²):</label>
-              <input
+              <v-text-field
+                density="compact"
+                label="Superficie metros cuadrados"
+                variant="outlined"
                 type="number"
-                v-model.number="cantidades[elemento.concepto]"
                 min="0"
-                class="cantidad-input"
-                :placeholder="'Introduce m²'"
-              />
+                single-line
+                v-model="cantidades[elemento.concepto]"
+              ></v-text-field>
             </div>
 
-            <!-- Input para longitud (elementos con ml) -->
             <div
               v-if="
                 elementosSeleccionados[elemento.concepto] &&
-                elemento.unidad.includes('ml')
+                elemento.unidad.includes('m') &&
+                !elemento.unidad.includes('m2')
               "
-              class="longitud-control"
             >
-              <label>Longitud (ml):</label>
-              <input
+              <v-text-field
+                density="compact"
+                label="Longitud metros lineales"
+                variant="outlined"
                 type="number"
-                v-model.number="cantidades[elemento.concepto]"
                 min="0"
-                class="cantidad-input"
-                :placeholder="'Introduce ml'"
-              />
+                single-line
+                placeholder="Longitud metros lineales"
+                v-model="cantidades[elemento.concepto]"
+              ></v-text-field>
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </v-sheet>
 </template>
+
 <style scoped>
-.titular {
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
-  margin-bottom: 1em;
-}
-
-.titulo {
-  text-transform: uppercase;
-  font-size: clamp(1rem, 2.294vw + 0.541rem, 2.5rem);
-  font-weight: bold;
-  color: #2aa8e0;
-  /* background: linear-gradient(90deg, #f39200, #999, #2aa8e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
-  /* margin: auto; */
-}
-
-span.total-presupuesto {
-  padding: 0.25em clamp(1rem, 1.53vw + 0.694rem, 2rem);
-  background: #ffffff20;
-  border-radius: 5px;
-}
-.total-presupuesto {
-  font-size: clamp(1.1rem, 0.612vw + 0.978rem, 1.5rem);
-  margin-left: auto;
-}
-
-.v-row {
-  margin: 0;
-}
-
 input[type="number"],
 input[type="text"] {
   color: #333;
   background-color: #ccc;
   padding: 2px 5px;
   border-radius: 5px;
-
-  border: none;
+  /* border: none; */
 }
 
 .categoria-section {
-  padding-block: 1em;
-  border-bottom: 1px solid #ffffff20;
+  border-bottom: solid 1px #666;
 }
+
 .categoria-section:last-child {
   border-bottom: none;
-}
-
-.categoria-titulo {
-  color: #f39200;
-  padding-bottom: 4px;
-  text-transform: uppercase;
-  font-size: 1em;
-  margin-bottom: 0.75em;
-}
-
-.categoria-elementos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 2em;
-}
-
-.elemento-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.divisor {
-  color: #f39200;
-  opacity: 0.75;
 }
 
 .checkbox-label {
@@ -322,17 +273,5 @@ input[type="text"] {
 
 .cantidad-input {
   max-width: 60px;
-}
-
-.superficie-info {
-  color: #ccc;
-  font-style: italic;
-  margin-left: 24px;
-}
-
-@media (width < 400px) {
-  .categoria-elementos {
-    grid-template-columns: repeat(auto-fill, minmax(244px, 1fr));
-  }
 }
 </style>

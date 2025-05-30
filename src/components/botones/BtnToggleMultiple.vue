@@ -69,24 +69,33 @@ const decrementar = () => {
 <template>
   <div class="btn-toggle">
     <p class="pb-2">{{ estancia }}</p>
-    <v-btn-toggle rounded="6" mandatory>
+    <v-btn-toggle rounded="6">
       <v-btn
-        size="small"
-        color="red"
+        size="x-small"
+        icon="mdi-chevron-left"
         @click="decrementar"
         :disabled="verifi === 'no'"
-        >-</v-btn
-      >
-      <v-btn size="small" :value="false" color="red">
-        {{ verifi === "no" ? "NO" : verifi }}</v-btn
-      >
+      />
+      <v-btn :base-color="verifi === 'no' ? 'red' : 'success'" mandatory>
+        {{ verifi === "no" ? "NO" : verifi }}
+      </v-btn>
       <v-btn
-        size="small"
-        color="success"
+        size="x-small"
+        icon="mdi-chevron-right"
         @click="incrementar"
         :disabled="verifi === maxim"
-        >+</v-btn
-      >
+      />
     </v-btn-toggle>
   </div>
 </template>
+
+<style>
+.v-btn__overlay:hover,
+.v-btn__overlay {
+  opacity: calc(var(--v-activated-opacity) * var(--v-theme-overlay-multiplier));
+}
+
+.v-btn:hover > .v-btn__overlay {
+  opacity: calc(var(--v-activated-opacity) * var(--v-theme-overlay-multiplier));
+}
+</style>

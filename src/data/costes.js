@@ -4,7 +4,7 @@ const datosReforma = {
     {
       concepto: "Bancada Compac Plomo 2cm",
       precio: 250,
-      unidad: "ml",
+      unidad: "m",
       ubicaciones: ["cocina"],
     },
     {
@@ -34,7 +34,7 @@ const datosReforma = {
     {
       concepto: "Frente bancada en Compac Plomo 2cm",
       precio: 250,
-      unidad: "ml",
+      unidad: "m",
       ubicaciones: ["cocina"],
     },
     {
@@ -52,13 +52,13 @@ const datosReforma = {
     {
       concepto: "Muebles de cocina (bajos o altos)",
       precio: 400,
-      unidad: "ml",
+      unidad: "m",
       ubicaciones: ["cocina"],
     },
     {
       concepto: "Tiras LED (incluye parte proporcional de driver)",
       precio: 100,
-      unidad: "ml",
+      unidad: "m",
       ubicaciones: ["cocina"],
     },
   ],

@@ -79,7 +79,7 @@ const cancelAction = () => {
       <v-container>
         <Header />
         <v-row
-          class="bg-surface-light pa-4 ga-4 rounded text-center justify-center"
+          class="ma-0 bg-surface-light pa-4 ga-4 rounded text-center justify-center"
         >
           <BtnToggle
             estancia="Comedor"
@@ -131,9 +131,3 @@ const cancelAction = () => {
     </v-dialog>
   </v-app>
 </template>
-
-<style scoped>
-.v-row {
-  margin: 0;
-}
-</style>
