@@ -228,7 +228,17 @@ const formatoMoneda = (valor) => {
   </v-sheet>
 </template>
 
+<style>
+.v-input__details {
+  display: none !important;
+}
+</style>
+
 <style scoped>
+.v-input__details {
+  display: none;
+}
+
 input[type="number"],
 input[type="text"] {
   color: #333;
