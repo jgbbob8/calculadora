@@ -118,114 +118,117 @@ const formatoMoneda = (valor) => {
 </script>
 
 <template>
-  <v-sheet
-    v-if="visible"
-    class="bg-surface-light pa-6 mb-6 ga-4 rounded mx-auto"
-  >
-    <div class="d-flex align-center mb-4">
-      <h2 class="text-h5 text-sm-h3 font-weight-bold text-blue">
-        {{ nombre }}
-      </h2>
-      <p
-        class="bg-grey-darken-2 rounded pl-6 pr-6 pt-2 pb-2 text-sm-h6 text-subtitle-1 ml-auto"
-      >
-        Total: {{ formatoMoneda(totalPresupuesto) }}€
-      </p>
-    </div>
-
-    <div class="elementos-estancia mt-4 pb-4">
-      <div
-        v-for="(elementos, nombreCategoria) in elementosEstanciaOrganizados"
-        :key="nombreCategoria"
-        class="categoria-section pt-4 pb-4"
-      >
-        <h6 class="text-orange text-uppercase text-subtitle-1 pb-2">
-          {{ nombresCategorias[nombreCategoria] || nombreCategoria }}
-        </h6>
-
-        <v-row class="mb-4 align-content-lg-center">
-          <v-col
-            cols="12"
-            lg="4"
-            sm="6"
-            v-for="elemento in elementos"
-            :key="elemento.concepto"
+  <v-expansion-panels>
+    <v-expansion-panel
+      v-if="visible"
+      class="bg-surface-light mb-4 rounded mx-auto"
+    >
+      <template v-slot:title>
+        <div class="d-flex align-center justify-space-between w-100">
+          <h2 class="text-h6 text-sm-h5 font-weight-bold text-grey">
+            {{ nombre }}
+          </h2>
+          <p class="pl-6 pr-6 text-h6 text-grey">
+            TOTAL: {{ formatoMoneda(totalPresupuesto) }}€
+          </p>
+        </div>
+      </template>
+      <template v-slot:text>
+        <div class="elementos-estancia pb-4">
+          <div
+            v-for="(elementos, nombreCategoria) in elementosEstanciaOrganizados"
+            :key="nombreCategoria"
+            class="categoria-section pt-4 pb-4"
           >
-            <div class="flex justify-space-between items-center">
-              <label class="checkbox-label">
-                <input
-                  type="checkbox"
-                  v-model="elementosSeleccionados[elemento.concepto]"
-                  class="checkbox-input"
-                />
-                <p class="elemento-nombre">
-                  {{ elemento.concepto
-                  }}<span class="text-orange opacity-80"> | </span
-                  >{{ elemento.unidad }}
-                </p>
-              </label>
-            </div>
+            <h6 class="text-orange text-uppercase text-subtitle-1 pb-2">
+              {{ nombresCategorias[nombreCategoria] || nombreCategoria }}
+            </h6>
 
-            <!-- Input para cantidad (elementos que no son m2 ni m) -->
-            <div
-              v-if="
-                elementosSeleccionados[elemento.concepto] &&
-                !elemento.unidad.includes('m2') &&
-                !elemento.unidad.includes('m')
-              "
-            >
-              <v-text-field
-                density="compact"
-                label="Cantidad"
-                type="number"
-                min="0"
-                single-line
-                variant="outlined"
-                v-model="cantidades[elemento.concepto]"
-              ></v-text-field>
-            </div>
+            <v-row class="mb-4 align-content-lg-center">
+              <v-col
+                cols="12"
+                lg="4"
+                sm="6"
+                v-for="elemento in elementos"
+                :key="elemento.concepto"
+              >
+                <div class="flex justify-space-between items-center">
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      v-model="elementosSeleccionados[elemento.concepto]"
+                      class="checkbox-input"
+                    />
+                    <p class="elemento-nombre">
+                      {{ elemento.concepto
+                      }}<span class="text-orange opacity-80"> | </span
+                      >{{ elemento.unidad }}
+                    </p>
+                  </label>
+                </div>
 
-            <!-- Input para superficie (elementos con m2) -->
-            <div
-              v-if="
-                elementosSeleccionados[elemento.concepto] &&
-                elemento.unidad.includes('m2')
-              "
-            >
-              <v-text-field
-                density="compact"
-                label="Superficie metros cuadrados"
-                variant="outlined"
-                type="number"
-                min="0"
-                single-line
-                v-model="cantidades[elemento.concepto]"
-              ></v-text-field>
-            </div>
+                <!-- Input para cantidad (elementos que no son m2 ni m) -->
+                <div
+                  v-if="
+                    elementosSeleccionados[elemento.concepto] &&
+                    !elemento.unidad.includes('m2') &&
+                    !elemento.unidad.includes('m')
+                  "
+                >
+                  <v-text-field
+                    density="compact"
+                    label="Cantidad"
+                    type="number"
+                    min="0"
+                    single-line
+                    variant="outlined"
+                    v-model="cantidades[elemento.concepto]"
+                  ></v-text-field>
+                </div>
 
-            <div
-              v-if="
-                elementosSeleccionados[elemento.concepto] &&
-                elemento.unidad.includes('m') &&
-                !elemento.unidad.includes('m2')
-              "
-            >
-              <v-text-field
-                density="compact"
-                label="Longitud metros lineales"
-                variant="outlined"
-                type="number"
-                min="0"
-                single-line
-                placeholder="Longitud metros lineales"
-                v-model="cantidades[elemento.concepto]"
-              ></v-text-field>
-            </div>
-          </v-col>
-        </v-row>
-      </div>
-    </div>
-  </v-sheet>
+                <!-- Input para superficie (elementos con m2) -->
+                <div
+                  v-if="
+                    elementosSeleccionados[elemento.concepto] &&
+                    elemento.unidad.includes('m2')
+                  "
+                >
+                  <v-text-field
+                    density="compact"
+                    label="Superficie metros cuadrados"
+                    variant="outlined"
+                    type="number"
+                    min="0"
+                    single-line
+                    v-model="cantidades[elemento.concepto]"
+                  ></v-text-field>
+                </div>
+
+                <div
+                  v-if="
+                    elementosSeleccionados[elemento.concepto] &&
+                    elemento.unidad.includes('m') &&
+                    !elemento.unidad.includes('m2')
+                  "
+                >
+                  <v-text-field
+                    density="compact"
+                    label="Longitud metros lineales"
+                    variant="outlined"
+                    type="number"
+                    min="0"
+                    single-line
+                    placeholder="Longitud metros lineales"
+                    v-model="cantidades[elemento.concepto]"
+                  ></v-text-field>
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+      </template>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 
 <style>

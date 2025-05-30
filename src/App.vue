@@ -78,9 +78,7 @@ const cancelAction = () => {
     <v-main>
       <v-container>
         <Header />
-        <v-row
-          class="ma-0 bg-surface-light pa-4 ga-4 rounded text-center justify-center"
-        >
+        <v-row class="ma-0 ga-4 rounded text-center justify-left">
           <BtnToggle
             estancia="Comedor"
             @toggle="(valor) => toggleState('comedor', valor)"

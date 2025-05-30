@@ -62,8 +62,8 @@ const formatoMoneda = (valor) => {
 </script>
 
 <template>
-  <div class="total-presupuesto">
-    <p>TOTAL GLOBAL: {{ formatoMoneda(totalGlobalPresupuesto) }}€</p>
+  <div class="total-presupuesto text-h6">
+    <p>TOTAL PRESUPUESTO: {{ formatoMoneda(totalGlobalPresupuesto) }}€</p>
   </div>
 
   <Estancia
@@ -117,9 +117,8 @@ const formatoMoneda = (valor) => {
 <style scoped>
 /* Añade algunos estilos si quieres */
 .total-presupuesto {
-  font-size: clamp(1.1rem, 0.612vw + 0.978rem, 1.5rem);
   text-align: right;
-  margin: 1em 2em;
+  margin: 1em 3.5em;
   opacity: 0.5;
 }
 </style>
