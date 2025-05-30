@@ -34,7 +34,7 @@ const { theme, toggleTheme } = useCustomTheme();
 .logo {
   text-align: center;
   padding-bottom: 1em;
-  padding-top: -1em;
+  margin-top: -1em;
 }
 .logo img {
   max-width: 250px;

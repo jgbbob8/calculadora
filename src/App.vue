@@ -7,7 +7,7 @@ import Estancias from "./components/Estancias.vue";
 import AppFooter from "./components/Footer.vue";
 
 const state = ref({
-  comedor: false,
+  salon: false,
   cocina: false,
   bano: 0,
   habit: 0,
@@ -28,7 +28,7 @@ const handleConfirmToggle = (key, value) => {
   // Para BtnToggleMultiple: si state.value[key] es > 0 y value es 0
 
   const isDeactivatingToggle =
-    (key === "comedor" || key === "cocina") &&
+    (key === "salon" || key === "cocina") &&
     state.value[key] === true &&
     value === false;
   const isDeactivatingMultiple =
@@ -71,6 +71,22 @@ const cancelAction = () => {
   confirmActionKey.value = null;
   confirmActionValue.value = null;
 };
+
+// --- VARIABLE PARA ALMACENAR EL TOTAL RECIBIDO DEL HIJO ---
+const totalPresupuesto = ref(0);
+
+// --- FUNCIÓN PARA MANEJAR EL TOTAL ENVIADO DESDE ESTANCIAS ---
+const handleTotalUpdate = (nuevoTotal) => {
+  totalPresupuesto.value = nuevoTotal;
+};
+
+// --- FUNCIÓN DE FORMATO DE MONEDA ---
+const formatoMoneda = (valor) => {
+  return new Intl.NumberFormat("es-ES", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(valor);
+};
 </script>
 
 <template>
@@ -78,11 +94,14 @@ const cancelAction = () => {
     <v-main>
       <v-container>
         <Header />
-        <v-row class="ma-0 ga-4 rounded text-center justify-left">
+
+        <v-row
+          class="ma-0 ga-4 mb-8 rounded text-center align-end justify-lg-space-between"
+        >
           <BtnToggle
             estancia="Comedor"
-            @toggle="(valor) => toggleState('comedor', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('comedor', valor)"
+            @toggle="(valor) => toggleState('salon', valor)"
+            @confirmToggle="(valor) => handleConfirmToggle('salon', valor)"
           />
           <BtnToggle
             estancia="Cocina"
@@ -101,9 +120,16 @@ const cancelAction = () => {
             @toggle="(valor) => toggleState('habit', valor)"
             @confirmToggle="(valor) => handleConfirmToggle('habit', valor)"
           />
+
+          <div
+            class="total-presupuesto text-h6 pa-2 bg-grey-darken-3 rounded text-grey-lighten-1"
+          >
+            <p>TOTAL GLOBAL: {{ formatoMoneda(totalPresupuesto) }} €</p>
+          </div>
         </v-row>
 
-        <Estancias :state="state" />
+        <!-- <Estancias :state="state" /> -->
+        <Estancias :state="state" @updateTotal="handleTotalUpdate" />
       </v-container>
     </v-main>
     <AppFooter />

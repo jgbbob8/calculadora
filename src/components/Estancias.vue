@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue"; // Importa ref y computed
+import { ref, computed, watch } from "vue"; // Importa ref y computed
 import Estancia from "./Estancia.vue";
 
 // --- PROPS DEL PADRE (EXISTENTES) ---
@@ -59,17 +59,27 @@ const formatoMoneda = (valor) => {
     maximumFractionDigits: 0,
   }).format(valor);
 };
+
+// Enviar el total al padre
+const emit = defineEmits(["updateTotal"]);
+watch(
+  totalGlobalPresupuesto,
+  (newValue) => {
+    emit("updateTotal", newValue);
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
-  <div class="total-presupuesto text-h6">
+  <!-- <div class="total-presupuesto text-h6">
     <p>TOTAL PRESUPUESTO: {{ formatoMoneda(totalGlobalPresupuesto) }}€</p>
-  </div>
+  </div> -->
 
   <Estancia
     :clave="`salon`"
     :nombre="`Comedor / Salón`"
-    :visible="state.comedor"
+    :visible="state.salon"
     :elementosEstancia="elementosEstanciaOrganizados.salon"
     :elementosSeleccionados="elementosSeleccionados"
     :superficie="superficie.value"
@@ -113,12 +123,3 @@ const formatoMoneda = (valor) => {
     @update:totalEstancia="handleUpdateTotalEstancia"
   />
 </template>
-
-<style scoped>
-/* Añade algunos estilos si quieres */
-.total-presupuesto {
-  text-align: right;
-  margin: 1em 3.5em;
-  opacity: 0.5;
-}
-</style>
