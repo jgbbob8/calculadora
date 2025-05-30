@@ -128,7 +128,6 @@ const formatoMoneda = (valor) => {
           </div>
         </v-row>
 
-        <!-- <Estancias :state="state" /> -->
         <Estancias :state="state" @updateTotal="handleTotalUpdate" />
       </v-container>
     </v-main>
