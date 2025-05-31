@@ -16,20 +16,8 @@ export default defineConfig({
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
-      // Configuración más específica para optimizar recursos
       icons: {
         defaultSet: "mdi",
-      },
-      theme: {
-        options: {
-          customProperties: true,
-        },
-      },
-      // Añade esta configuración para desactivar el preload
-      defaults: {
-        global: {
-          ripple: false,
-        },
       },
     }),
     Components(),
@@ -45,7 +33,6 @@ export default defineConfig({
       autoInject: false,
     }),
   ],
-
   define: { "process.env": {} },
   resolve: {
     alias: {
