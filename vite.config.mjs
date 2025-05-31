@@ -15,7 +15,17 @@ export default defineConfig({
       template: { transformAssetUrls },
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
-    Vuetify(),
+    Vuetify({
+      // Configuración más específica para optimizar recursos
+      icons: {
+        defaultSet: "mdi",
+      },
+      theme: {
+        options: {
+          customProperties: true,
+        },
+      },
+    }),
     Components(),
     ViteFonts({
       google: {
