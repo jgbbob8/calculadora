@@ -16,10 +16,16 @@ export default defineConfig({
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
-      icons: {
-        defaultSet: undefined, // No usar conjunto de iconos por defecto
-      },
-    }),
+  icons: {
+    defaultSet: false, // Cambiar de undefined a false
+  },
+  // Añade esta configuración adicional
+  defaults: {
+    VIcon: {
+      component: () => null, // Desactiva completamente los iconos
+    },
+  },
+}),
     Components(),
     ViteFonts({
       google: {
