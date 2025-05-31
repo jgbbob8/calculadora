@@ -18,6 +18,21 @@ export default defineConfig({
     Vuetify({
       icons: {
         defaultSet: "mdi",
+        // Añade esta configuración
+        sets: {
+          mdi: {
+            // No cargar fuentes automáticamente
+          },
+        },
+      },
+      // Desactiva la carga automática de estilos
+      styles: {
+        configFile: false,
+      },
+      theme: {
+        options: {
+          customProperties: true,
+        },
       },
     }),
     Components(),
