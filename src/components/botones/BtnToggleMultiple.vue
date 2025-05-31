@@ -18,7 +18,7 @@ watch(verifi, (nuevoValor) => {
 const incrementar = () => {
   if (verifi.value === "no") {
     verifi.value = "1";
-  } else if (verifi.value < { maxim }) {
+  } else if (Number(verifi.value) < maxim) {
     verifi.value = String(Number(verifi.value) + 1);
   }
 };
