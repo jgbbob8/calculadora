@@ -24,7 +24,7 @@ export default defineConfig({
     VIcon: {
       component: () => null, // Desactiva completamente los iconos
     },
-  },
+   },
 }),
     Components(),
     ViteFonts({
