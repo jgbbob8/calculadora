@@ -39,6 +39,17 @@ export default defineConfig({
       autoInject: false,
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separa los iconos en un chunk diferente
+          "material-icons": ["@mdi/font"],
+        },
+      },
+    },
+  },
+
   define: { "process.env": {} },
   resolve: {
     alias: {
