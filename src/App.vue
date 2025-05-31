@@ -122,7 +122,7 @@ const formatoMoneda = (valor) => {
           />
 
           <div
-            class="total-presupuesto text-h6 pa-2 bg-grey-darken-3 rounded text-grey-lighten-1"
+            class="total-presupuesto text-h6 pt-2 pb-2 pl-5 pr-5 bg-grey-darken-3 rounded text-grey-lighten-1"
           >
             <p>TOTAL GLOBAL: {{ formatoMoneda(totalPresupuesto) }} €</p>
           </div>

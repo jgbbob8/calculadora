@@ -125,10 +125,10 @@ const formatoMoneda = (valor) => {
     >
       <template v-slot:title>
         <div class="d-flex align-center justify-space-between w-100">
-          <h2 class="text-h6 text-sm-h5 font-weight-bold text-grey">
+          <h2 class="text-h6 text-sm-h6 text-grey">
             {{ nombre }}
           </h2>
-          <p class="pl-4 pr-4 text-h6 text-grey">
+          <p class="pl-4 pr-4 text-subtitle-1 text-grey">
             TOTAL: {{ formatoMoneda(totalPresupuesto) }}€
           </p>
         </div>
@@ -237,6 +237,7 @@ const formatoMoneda = (valor) => {
 }
 .v-expansion-panel-title {
   padding-inline: 1em !important;
+  padding-block: 0.75em !important;
 }
 </style>
 
