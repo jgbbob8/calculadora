@@ -17,22 +17,7 @@ export default defineConfig({
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
       icons: {
-        defaultSet: "mdi",
-        // Añade esta configuración
-        sets: {
-          mdi: {
-            // No cargar fuentes automáticamente
-          },
-        },
-      },
-      // Desactiva la carga automática de estilos
-      styles: {
-        configFile: false,
-      },
-      theme: {
-        options: {
-          customProperties: true,
-        },
+        defaultSet: undefined, // No usar conjunto de iconos por defecto
       },
     }),
     Components(),
@@ -64,9 +49,5 @@ export default defineConfig({
         api: "modern-compiler",
       },
     },
-  },
-  build: {
-    target: "esnext",
-    minify: "esbuild",
   },
 });
