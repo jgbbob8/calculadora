@@ -25,6 +25,12 @@ export default defineConfig({
           customProperties: true,
         },
       },
+      // Añade esta configuración para desactivar el preload
+      defaults: {
+        global: {
+          ripple: false,
+        },
+      },
     }),
     Components(),
     ViteFonts({
@@ -39,16 +45,6 @@ export default defineConfig({
       autoInject: false,
     }),
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // Separa los iconos en un chunk diferente
-          "material-icons": ["@mdi/font"],
-        },
-      },
-    },
-  },
 
   define: { "process.env": {} },
   resolve: {
