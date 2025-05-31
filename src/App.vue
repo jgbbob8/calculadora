@@ -99,7 +99,7 @@ const formatoMoneda = (valor) => {
           class="ma-0 ga-4 mb-8 rounded text-center align-end justify-md-space-between justify-center"
         >
           <BtnToggle
-            estancia="Comedor"
+            estancia="Salón / Comedor"
             @toggle="(valor) => toggleState('salon', valor)"
             @confirmToggle="(valor) => handleConfirmToggle('salon', valor)"
           />

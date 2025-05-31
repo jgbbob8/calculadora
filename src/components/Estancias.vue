@@ -78,7 +78,7 @@ watch(
 
   <Estancia
     :clave="`salon`"
-    :nombre="`Comedor / Salón`"
+    :nombre="`Salón`"
     :visible="state.salon"
     :elementosEstancia="elementosEstanciaOrganizados.salon"
     :elementosSeleccionados="elementosSeleccionados"
