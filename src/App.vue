@@ -154,3 +154,12 @@ const formatoMoneda = (valor) => {
     </v-dialog>
   </v-app>
 </template>
+
+<style>
+@media (width<467px) {
+  .total-presupuesto {
+    margin-top: 0.9em;
+    padding-inline: 2.3em !important;
+  }
+}
+</style>
