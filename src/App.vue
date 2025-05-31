@@ -96,7 +96,7 @@ const formatoMoneda = (valor) => {
         <Header />
 
         <v-row
-          class="ma-0 ga-4 mb-8 rounded text-center align-end justify-lg-space-between"
+          class="ma-0 ga-4 mb-8 rounded text-center align-end justify-md-space-between justify-center"
         >
           <BtnToggle
             estancia="Comedor"

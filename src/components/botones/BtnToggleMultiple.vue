@@ -34,7 +34,7 @@ const decrementar = () => {
 
 <template>
   <div class="btn-toggle">
-    <p class="pb-2">{{ estancia }}</p>
+    <p class="pb-1 text-grey">{{ estancia }}</p>
     <v-btn-toggle rounded="6">
       <v-btn
         size="x-small"

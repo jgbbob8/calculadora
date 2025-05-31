@@ -128,7 +128,7 @@ const formatoMoneda = (valor) => {
           <h2 class="text-h6 text-sm-h5 font-weight-bold text-grey">
             {{ nombre }}
           </h2>
-          <p class="pl-6 pr-6 text-h6 text-grey">
+          <p class="pl-4 pr-4 text-h6 text-grey">
             TOTAL: {{ formatoMoneda(totalPresupuesto) }}€
           </p>
         </div>
@@ -234,6 +234,9 @@ const formatoMoneda = (valor) => {
 <style>
 .v-input__details {
   display: none !important;
+}
+.v-expansion-panel-title {
+  padding-inline: 1em !important;
 }
 </style>
 
