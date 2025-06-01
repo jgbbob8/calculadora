@@ -16,16 +16,16 @@ export default defineConfig({
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
-  icons: {
-    defaultSet: false, // Cambiar de undefined a false
-  },
-  // Añade esta configuración adicional
-  defaults: {
-    VIcon: {
-      component: () => null, // Desactiva completamente los iconos
-    },
-   },
-}),
+      icons: {
+        defaultSet: false, // Cambiar de undefined a false
+      },
+      // Añade esta configuración adicional
+      defaults: {
+        VIcon: {
+          component: () => null, // Desactiva completamente los iconos
+        },
+      },
+    }),
     Components(),
     ViteFonts({
       google: {
@@ -39,6 +39,11 @@ export default defineConfig({
       autoInject: false,
     }),
   ],
+  build: {
+    rollupOptions: {
+      external: ["@mdi/font"],
+    },
+  },
   define: { "process.env": {} },
   resolve: {
     alias: {
