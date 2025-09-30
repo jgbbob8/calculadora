@@ -219,7 +219,7 @@ watch(
       </template>
       <template v-slot:text>
         <div class="elementos-estancia pb-4">
-          <p class="w-100 text-center text-grey mt-4">
+          <p class="w-100 text-right text-grey mt-4 pr-9">
             Contenedor, demolición, subida/bajada materiales y limpieza final
             estancia
             <strong class="text-red">{{ formatearEuros(coste_base) }}</strong>
