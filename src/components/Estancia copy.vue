@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
-import { datosReforma } from "@/data/costes.js"; // Asegúrate de que la ruta sea correcta
-import { datosEstancia } from "@/data/estancias.js"; // Asumo que esta ruta también es correcta
+import { datosReforma } from "@/data/costes.js";
+import { datosEstancia } from "@/data/estancias.js";
 
 // --- Props que el componente Estancia recibe del padre ---
 const props = defineProps({
@@ -32,6 +32,23 @@ const coste_base = computed(() => {
   return estancia?.costeBase || 0;
 });
 
+// Función para obtener elementos por ubicación organizados por categoría
+const obtenerElementosPorUbicacionOrganizados = (ubicacion) => {
+  const elementosOrganizados = {};
+
+  Object.entries(datosReforma).forEach(([nombreCategoria, categoria]) => {
+    const elementosDeCategoria = categoria.filter((elemento) =>
+      elemento.ubicaciones.includes(ubicacion)
+    );
+
+    if (elementosDeCategoria.length > 0) {
+      elementosOrganizados[nombreCategoria] = elementosDeCategoria;
+    }
+  });
+
+  return elementosOrganizados;
+};
+
 // Nombres más legibles para las categorías
 const nombresCategorias = {
   instalacionElectrica: "Instalación Eléctrica",
@@ -44,103 +61,22 @@ const nombresCategorias = {
   bano: "Elementos de Baño",
 };
 
-// --- Datos para la lógica de sustitutos ---
-// Aplanamos todos los elementos de datosReforma para facilitar la búsqueda
-const todosLosElementos = computed(() => {
-  const all = [];
-  Object.values(datosReforma).forEach((categoria) => {
-    all.push(...categoria);
-  });
-  return all;
-});
-
 // Obtener elementos de ESTA estancia organizados por categorías
-const elementosEstanciaOrganizados = computed(() => {
-  const elementosOrganizados = {};
-  Object.entries(datosReforma).forEach(([nombreCategoria, categoria]) => {
-    const elementosDeCategoria = categoria.filter((elemento) =>
-      elemento.ubicaciones.includes(estancia.value)
-    );
-    if (elementosDeCategoria.length > 0) {
-      elementosOrganizados[nombreCategoria] = elementosDeCategoria;
-    }
-  });
-  return elementosOrganizados;
-});
+const elementosEstanciaOrganizados = obtenerElementosPorUbicacionOrganizados(
+  estancia.value
+);
 
 // Estado para elementos seleccionados y cantidades de ESTA estancia
 const elementosSeleccionados = ref({});
 const cantidades = ref({});
-const elementosDeshabilitados = ref({}); // NUEVO: Para controlar qué elementos están deshabilitados
 
 // Función para inicializar estados
 const inicializarEstados = () => {
-  // Reinicia los objetos completos para evitar problemas de reactividad con $set
-  elementosSeleccionados.value = {};
-  cantidades.value = {};
-  elementosDeshabilitados.value = {};
-
-  Object.values(elementosEstanciaOrganizados.value).forEach((categoria) => {
+  Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
     categoria.forEach((elemento) => {
       elementosSeleccionados.value[elemento.concepto] = false;
       cantidades.value[elemento.concepto] = 1;
-      elementosDeshabilitados.value[elemento.concepto] = false; // Inicialmente, ningún elemento está deshabilitado
     });
-  });
-};
-
-// NUEVO: Método para manejar el cambio del checkbox y la lógica de sustitución
-const manejarCambioSeleccion = (elementoActual) => {
-  const isSelected = elementosSeleccionados.value[elementoActual.concepto];
-
-  // 1. Manejar sustitutos del elemento actual
-  if (elementoActual.sustitutivo && elementoActual.sustitutivo.length > 0) {
-    elementoActual.sustitutivo.forEach((sustitutoConcepto) => {
-      // Si el elemento actual es seleccionado, deshabilitar y deseleccionar sus sustitutos
-      if (isSelected) {
-        elementosDeshabilitados.value[sustitutoConcepto] = true;
-        if (elementosSeleccionados.value[sustitutoConcepto]) {
-          elementosSeleccionados.value[sustitutoConcepto] = false;
-          cantidades.value[sustitutoConcepto] = 1; // Resetear cantidad
-        }
-      } else {
-        // Si el elemento actual es deseleccionado, habilitar sus sustitutos
-        elementosDeshabilitados.value[sustitutoConcepto] = false;
-      }
-    });
-  }
-
-  // 2. Manejar si el elemento actual es un sustituto de otros elementos
-  // Itera sobre todos los elementos para ver si alguno tiene a 'elementoActual' como sustituto
-  todosLosElementos.value.forEach((item) => {
-    if (
-      item.sustitutivo &&
-      item.sustitutivo.includes(elementoActual.concepto)
-    ) {
-      // Si el elemento actual (que es un sustituto) es seleccionado, deshabilitar el elemento 'base'
-      if (isSelected) {
-        elementosDeshabilitados.value[item.concepto] = true;
-        if (elementosSeleccionados.value[item.concepto]) {
-          elementosSeleccionados.value[item.concepto] = false;
-          cantidades.value[item.concepto] = 1; // Resetear cantidad
-        }
-      } else {
-        // Si el elemento actual (sustituto) es deseleccionado, el elemento 'base'
-        // debería habilitarse SOLO SI NINGUNO de sus otros sustitutos está seleccionado.
-        // Esto evita que se habilite si otro sustituto sigue activo.
-
-        // Obtenemos todos los elementos que son sustitutos del 'item'
-        const otrosSustitutosActivos = item.sustitutivo.some(
-          (otroSustitutoConcepto) =>
-            otroSustitutoConcepto !== elementoActual.concepto &&
-            elementosSeleccionados.value[otroSustitutoConcepto]
-        );
-
-        if (!otrosSustitutosActivos) {
-          elementosDeshabilitados.value[item.concepto] = false;
-        }
-      }
-    }
   });
 };
 
@@ -155,7 +91,7 @@ inicializarEstados();
 // Computed para calcular el total de ESTA estancia
 const totalPresupuesto = computed(() => {
   let total = 0;
-  Object.values(elementosEstanciaOrganizados.value).forEach((categoria) => {
+  Object.values(elementosEstanciaOrganizados).forEach((categoria) => {
     categoria.forEach((elemento) => {
       if (elementosSeleccionados.value[elemento.concepto]) {
         const cantidad = cantidades.value[elemento.concepto];
@@ -246,8 +182,6 @@ watch(
                     <input
                       type="checkbox"
                       v-model="elementosSeleccionados[elemento.concepto]"
-                      :disabled="elementosDeshabilitados[elemento.concepto]"
-                      @change="manejarCambioSeleccion(elemento)"
                       class="checkbox-input"
                     />
                     <p class="elemento-nombre">
@@ -258,6 +192,7 @@ watch(
                   </label>
                 </div>
 
+                <!-- Input para cantidad (elementos que no son m2 ni m) -->
                 <div
                   v-if="
                     elementosSeleccionados[elemento.concepto] &&
@@ -276,6 +211,7 @@ watch(
                   ></v-text-field>
                 </div>
 
+                <!-- Input para superficie (elementos con m2) -->
                 <div
                   v-if="
                     elementosSeleccionados[elemento.concepto] &&
@@ -372,18 +308,6 @@ input[type="text"] {
   height: 16px;
   margin-top: 3px;
   cursor: pointer;
-}
-
-/* Opcional: Estilo para checkboxes deshabilitados */
-.checkbox-input:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Opcional: Estilo para el texto de elementos deshabilitados */
-.checkbox-input:disabled + p.elemento-nombre {
-  opacity: 0.6;
-  color: #999;
 }
 
 .cantidad-control,
