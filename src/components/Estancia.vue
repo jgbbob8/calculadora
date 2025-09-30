@@ -210,8 +210,8 @@ watch(
               {{ estancia_descripcion }}
             </p>
           </div>
-          <div class="w-fit text-left text-grey">
-            <p class="whitespace-nowrap pl-4 pr-4 text-subtitle-1 text-grey">
+          <div class="w-fit text-left text-white">
+            <p class="whitespace-nowrap pl-4 pr-4 text-subtitle-1">
               TOTAL: {{ formatearEuros(totalPresupuesto) }}
             </p>
           </div>
