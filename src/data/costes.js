@@ -80,7 +80,7 @@ const datosReforma = {
       ubicaciones: ["cocina"],
     },
     {
-      concepto: "Tiras LED (incluye parte proporcional de driver)",
+      concepto: "Tiras LED (incluye driver)",
       precio: 100,
       unidad: "m",
       ubicaciones: ["cocina"],
