@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import { datosReforma } from "@/data/costes.js";
+import { datosEstancia } from "@/data/estancias.js";
 
 // --- Props que el componente Estancia recibe del padre ---
 const props = defineProps({
@@ -9,12 +10,27 @@ const props = defineProps({
   visible: Boolean, // Si la estancia está visible o no
 });
 
+// Función helper para formatear
+const formatearEuros = (valor) => {
+  return `${valor.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}€`;
+};
+
 // --- Definición de eventos que este componente puede emitir ---
 const emit = defineEmits(["update:totalEstancia"]);
 
 // --- Estado local y computed properties de la estancia ---
 const estancia = ref(props.clave);
 const estancia_nombre = ref(props.nombre);
+
+const estancia_descripcion = computed(() => {
+  const estancia = datosEstancia.find((e) => e.estancia === props.clave);
+  return estancia?.descricion || "";
+});
+
+const coste_base = computed(() => {
+  const estancia = datosEstancia.find((e) => e.estancia === props.clave);
+  return estancia?.costeBase || 0;
+});
 
 // Función para obtener elementos por ubicación organizados por categoría
 const obtenerElementosPorUbicacionOrganizados = (ubicacion) => {
@@ -93,7 +109,11 @@ const totalPresupuesto = computed(() => {
 watch(
   totalPresupuesto,
   (newTotal) => {
-    emit("update:totalEstancia", { id: props.clave, total: newTotal });
+    emit("update:totalEstancia", {
+      id: props.clave,
+      total: newTotal,
+      coste_base: coste_base.value,
+    });
   },
   { immediate: true }
 );
@@ -108,13 +128,6 @@ watch(
     }
   }
 );
-
-const formatoMoneda = (valor) => {
-  return new Intl.NumberFormat("es-ES", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(valor);
-};
 </script>
 
 <template>
@@ -124,13 +137,22 @@ const formatoMoneda = (valor) => {
       class="bg-surface-light mb-4 rounded mx-auto"
     >
       <template v-slot:title>
-        <div class="d-flex align-center justify-space-between w-100">
-          <h2 class="text-h6 text-sm-h6 text-grey">
-            {{ nombre }}
-          </h2>
-          <p class="pl-4 pr-4 text-subtitle-1 text-grey">
-            TOTAL: {{ formatoMoneda(totalPresupuesto) }}€
-          </p>
+        <div
+          class="d-flex flex-column align-center justify-space-between w-100"
+        >
+          <div class="d-flex align-center justify-space-between w-100">
+            <h2 class="text-h6 text-sm-h6 text-grey">
+              {{ nombre }}
+            </h2>
+            <p class="pl-4 pr-4 text-subtitle-1 text-grey">
+              TOTAL: {{ formatearEuros(totalPresupuesto) }}
+            </p>
+          </div>
+          <div class="w-100 text-left text-grey">
+            <p>
+              {{ estancia_descripcion }}
+            </p>
+          </div>
         </div>
       </template>
       <template v-slot:text>
@@ -225,6 +247,11 @@ const formatoMoneda = (valor) => {
               </v-col>
             </v-row>
           </div>
+          <p class="w-100 text-right text-grey mt-4">
+            Contenedor, demolición, subida/bajada materiales y limpieza final
+            estancia
+            <strong class="text-red">{{ formatearEuros(coste_base) }}</strong>
+          </p>
         </div>
       </template>
     </v-expansion-panel>
@@ -238,6 +265,10 @@ const formatoMoneda = (valor) => {
 .v-expansion-panel-title {
   padding-inline: 1em !important;
   padding-block: 0.75em !important;
+}
+
+.v-expansion-panel-text__wrapper {
+  padding: 0px 24px !important;
 }
 </style>
 

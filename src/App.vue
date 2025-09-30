@@ -17,43 +17,6 @@ const toggleState = (key, value) => {
   state.value[key] = value;
 };
 
-// const showConfirmDialog = ref(false);
-// const confirmActionKey = ref(null);
-// const confirmActionValue = ref(null);
-
-// Nuevo método para manejar el evento de confirmación
-// const handleConfirmToggle = (key, value) => {
-
-//   const isDeactivatingToggle =
-//     (key === "salon" || key === "cocina") &&
-//     state.value[key] === true &&
-//     value === false;
-//   const isDeactivatingMultiple =
-//     (key === "bano" || key === "habit") && state.value[key] > 0 && value === 0;
-
-//   if (isDeactivatingToggle || isDeactivatingMultiple) {
-//     confirmActionKey.value = key;
-//     confirmActionValue.value = value;
-//     showConfirmDialog.value = true;
-//   } else {
-//     // Si no es una desactivación, o si el valor propuesto es una activación, se aplica directamente
-//     toggleState(key, value);
-//   }
-// };
-
-// const confirmAction = () => {
-//   toggleState(confirmActionKey.value, confirmActionValue.value);
-//   showConfirmDialog.value = false;
-//   confirmActionKey.value = null;
-//   confirmActionValue.value = null;
-// };
-
-// const cancelAction = () => {
-//   showConfirmDialog.value = false;
-//   confirmActionKey.value = null;
-//   confirmActionValue.value = null;
-// };
-
 // --- VARIABLE PARA ALMACENAR EL TOTAL RECIBIDO DEL HIJO ---
 const totalPresupuesto = ref(0);
 
@@ -62,12 +25,9 @@ const handleTotalUpdate = (nuevoTotal) => {
   totalPresupuesto.value = nuevoTotal;
 };
 
-// --- FUNCIÓN DE FORMATO DE MONEDA ---
-const formatoMoneda = (valor) => {
-  return new Intl.NumberFormat("es-ES", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(valor);
+// Función helper para formatear
+const formatearEuros = (valor) => {
+  return `${valor.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}€`;
 };
 </script>
 
@@ -106,7 +66,7 @@ const formatoMoneda = (valor) => {
           <div
             class="total-presupuesto text-h6 pt-2 pb-2 pl-5 pr-5 bg-grey-darken-3 rounded text-grey-lighten-1"
           >
-            <p>TOTAL GLOBAL: {{ formatoMoneda(totalPresupuesto) }} €</p>
+            <p>TOTAL GLOBAL: {{ formatearEuros(totalPresupuesto) }}</p>
           </div>
         </v-row>
 

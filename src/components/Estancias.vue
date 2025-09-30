@@ -1,62 +1,86 @@
 <script setup>
-import { ref, computed, watch } from "vue"; // Importa ref y computed
+import { ref, computed, watch } from "vue";
 import Estancia from "./Estancia.vue";
+import { datosEstancia } from "@/data/estancias.js";
 
 // --- PROPS DEL PADRE (EXISTENTES) ---
 defineProps({
-  state: Object, // Propiedad que controla la visibilidad de las estancias
+  state: Object,
 });
 
-// --- VARIABLES GLOBALES NECESARIAS PARA LOS CÁLCULOS DE LOS HIJOS ---
-// **IMPORTANTE**: Asegúrate de que estas variables estén definidas en el SCOPE
-// de este componente padre y que sean REACTIVAS (usando ref o reactive).
-// Si vienen de un store (Pinia/Vuex), adáptalas en consecuencia.
-
-// Ejemplo de cómo podrían estar definidas (ADAPTA ESTO A TU CÓDIGO REAL)
-// Estas son las "fuentes de la verdad" para todos los cálculos.
+// --- VARIABLES GLOBALES ---
 const elementosEstanciaOrganizados = ref({
-  /* ... tu estructura de datos completa aquí ... */
+  /* ... */
 });
 const elementosSeleccionados = ref({
-  /* ... tu objeto de selecciones aquí ... */
+  /* ... */
 });
-const superficie = ref(0); // Valor global de superficie para m2
-const longitud = ref(0); // Valor global de longitud para ml
+const superficie = ref(0);
+const longitud = ref(0);
 const cantidades = ref({
-  /* ... tus cantidades por defecto aquí ... */
+  /* ... */
 });
 
-// --- ESTADO PARA ALMACENAR LOS TOTALES INDIVIDUALES DE CADA ESTANCIA ---
-// Este objeto guardará el total de cada estancia, identificado por su 'clave'.
-// Por ejemplo: { 'salon': 1200, 'cocina': 800, 'bano_1': 300, ... }
-const totalesEstancias = ref({});
+// --- ESTADO PARA ALMACENAR LOS DATOS COMPLETOS DE CADA ESTANCIA ---
+const datosEstancias = ref({});
 
 // --- FUNCIÓN PARA MANEJAR EL EVENTO 'update:totalEstancia' ---
-// Esta función se ejecutará cada vez que un componente Estancia hijo emita su total.
-// Recibe un objeto con { id: 'clave_estancia', total: valor_total }.
-const handleUpdateTotalEstancia = ({ id, total }) => {
-  totalesEstancias.value[id] = total; // Almacena el total recibido en nuestro objeto
-  // console.log(`[Padre] Total actualizado para ${id}: ${total}`); // Para depuración
-  // console.log('[Padre] Totales acumulados:', totalesEstancias.value); // Para depuración
+const handleUpdateTotalEstancia = ({ id, total, coste_base }) => {
+  datosEstancias.value[id] = {
+    total: total,
+    costeBase: coste_base,
+  };
 };
 
 // --- COMPUTED PROPERTY PARA EL TOTAL GLOBAL DEL PRESUPUESTO ---
-// Suma todos los valores almacenados en 'totalesEstancias'.
+// Suma todos los totales + coste_base SOLO si el total > 0
 const totalGlobalPresupuesto = computed(() => {
   let granTotal = 0;
-  // Itera sobre los valores del objeto reactivo totalesEstancias.value
-  for (const id in totalesEstancias.value) {
-    granTotal += totalesEstancias.value[id];
+
+  for (const id in datosEstancias.value) {
+    const estancia = datosEstancias.value[id];
+
+    // Siempre suma el total
+    granTotal += estancia.total;
+
+    // Solo suma el coste base si el total es mayor que 0
+    if (estancia.total > 0) {
+      granTotal += estancia.costeBase;
+    }
   }
+
   return granTotal;
 });
 
-// --- FUNCIÓN DE FORMATO DE MONEDA (reutilizable) ---
-// Puedes mover esta función a un archivo de utilidades si la usas en muchos lugares.
+// --- COMPUTED PARA VER LOS DETALLES (OPCIONAL) ---
+const detallesPresupuesto = computed(() => {
+  let totalElementos = 0;
+  let totalCostesBase = 0;
+
+  for (const id in datosEstancias.value) {
+    const estancia = datosEstancias.value[id];
+    totalElementos += estancia.total;
+
+    // Solo cuenta el coste base si hay elementos seleccionados
+    if (estancia.total > 0) {
+      totalCostesBase += estancia.costeBase;
+    }
+  }
+
+  return {
+    totalElementos,
+    totalCostesBase,
+    granTotal: totalElementos + totalCostesBase,
+  };
+});
+
+// --- FUNCIÓN DE FORMATO DE MONEDA ---
 const formatoMoneda = (valor) => {
   return new Intl.NumberFormat("es-ES", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(valor);
 };
 
@@ -72,8 +96,11 @@ watch(
 </script>
 
 <template>
+  <!-- Puedes descomentar esto para ver el desglose -->
   <!-- <div class="total-presupuesto text-h6">
-    <p>TOTAL PRESUPUESTO: {{ formatoMoneda(totalGlobalPresupuesto) }}€</p>
+    <p>Total Elementos: {{ formatoMoneda(detallesPresupuesto.totalElementos) }}</p>
+    <p>Total Costes Base (solo estancias activas): {{ formatoMoneda(detallesPresupuesto.totalCostesBase) }}</p>
+    <p>TOTAL PRESUPUESTO: {{ formatoMoneda(totalGlobalPresupuesto) }}</p>
   </div> -->
 
   <Estancia
@@ -100,6 +127,7 @@ watch(
   />
   <Estancia
     v-for="n in 3"
+    :key="`bano-${n}`"
     :clave="`bano`"
     :nombre="`Baño ${n}`"
     :visible="state.bano >= n"
@@ -112,6 +140,7 @@ watch(
   />
   <Estancia
     v-for="n in 5"
+    :key="`habitacion-${n}`"
     :clave="`habitacion`"
     :nombre="`Habitación ${n}`"
     :visible="state.habit >= n"
