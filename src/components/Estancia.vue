@@ -203,20 +203,22 @@ watch(
       <template v-slot:title>
         <div class="d-flex align-center justify-space-between w-100">
           <div class="d-flex flex-column align-left justify-space-between">
-            <h2 class="text-h6 text-sm-h6 text-white">
+            <h2 class="text-subtitle-1 text-sm-h6">
               {{ nombre }}
             </h2>
-            <p class="text-grey">
-              {{ estancia_descripcion }}
-            </p>
           </div>
-          <div class="w-fit text-left text-white">
-            <p class="whitespace-nowrap pl-4 pr-4 text-subtitle-1">
+          <div class="w-fit text-left">
+            <p class="whitespace-nowrap pl-2 pr-2 text-subtitle-1 text-sm-h6">
               TOTAL: {{ formatearEuros(totalPresupuesto) }}
             </p>
           </div>
         </div>
       </template>
+      <div class="pt-2 pb-2 pl-4 pr-4" v-if="estancia_descripcion">
+        <p class="text-grey">
+          {{ estancia_descripcion }}
+        </p>
+      </div>
       <template v-slot:text>
         <div class="elementos-estancia pb-4">
           <p class="w-100 text-right text-grey mt-4 pr-9">
@@ -229,19 +231,20 @@ watch(
             :key="nombreCategoria"
             class="categoria-section pt-4 pb-4"
           >
-            <h6 class="text-orange text-uppercase text-subtitle-1 pb-2">
+            <h6 class="text-orange text-uppercase text-subtitle-1">
               {{ nombresCategorias[nombreCategoria] || nombreCategoria }}
             </h6>
 
-            <v-row class="mb-4 pl-2 align-content-lg-center">
+            <v-row class="mb-4 pl-sm-2 align-content-lg-center">
               <v-col
                 cols="12"
                 lg="4"
                 sm="6"
                 v-for="elemento in elementos"
                 :key="elemento.concepto"
+                class="d-flex ga-2"
               >
-                <div class="flex justify-space-between items-center">
+                <div class="elemento flex justify-space-between w-100">
                   <label class="checkbox-label">
                     <input
                       type="checkbox"
@@ -258,58 +261,19 @@ watch(
                   </label>
                 </div>
 
-                <div
-                  v-if="
-                    elementosSeleccionados[elemento.concepto] &&
-                    !elemento.unidad.includes('m2') &&
-                    !elemento.unidad.includes('m')
-                  "
-                >
-                  <v-text-field
-                    density="compact"
-                    label="Cantidad"
-                    type="number"
-                    min="0"
-                    single-line
-                    variant="outlined"
-                    v-model="cantidades[elemento.concepto]"
-                  ></v-text-field>
-                </div>
-
-                <div
-                  v-if="
-                    elementosSeleccionados[elemento.concepto] &&
-                    elemento.unidad.includes('m2')
-                  "
-                >
-                  <v-text-field
-                    density="compact"
-                    label="Superficie metros cuadrados"
+                <div v-if="elementosSeleccionados[elemento.concepto]">
+                  <!-- <v-text-field
                     variant="outlined"
                     type="number"
                     min="0"
                     single-line
                     v-model="cantidades[elemento.concepto]"
-                  ></v-text-field>
-                </div>
-
-                <div
-                  v-if="
-                    elementosSeleccionados[elemento.concepto] &&
-                    elemento.unidad.includes('m') &&
-                    !elemento.unidad.includes('m2')
-                  "
-                >
-                  <v-text-field
-                    density="compact"
-                    label="Longitud metros lineales"
-                    variant="outlined"
+                  ></v-text-field> -->
+                  <input
                     type="number"
                     min="0"
-                    single-line
-                    placeholder="Longitud metros lineales"
                     v-model="cantidades[elemento.concepto]"
-                  ></v-text-field>
+                  />
                 </div>
               </v-col>
             </v-row>
@@ -321,9 +285,10 @@ watch(
 </template>
 
 <style>
-.v-input__details {
-  display: none !important;
+.elemento-nombre {
+  min-height: 25px;
 }
+
 .v-expansion-panel-title {
   padding-inline: 1.25em !important;
   padding-block: 0.75em !important;
@@ -333,23 +298,20 @@ watch(
   padding: 0 1.25em !important;
 }
 
-button.v-expansion-panel-title {
-  background-color: #666;
+button.v-expansion-panel-title.v-expansion-panel-title--active {
+  background-color: rgb(var(--v-theme-surface)) !important;
 }
 </style>
 
 <style scoped>
-.v-input__details {
-  display: none;
-}
-
 input[type="number"],
 input[type="text"] {
-  color: #333;
-  background-color: #ccc;
-  padding: 2px 5px;
-  border-radius: 5px;
-  /* border: none; */
+  padding: 1px 0 0 4px;
+  border-radius: 4px;
+  width: 50px;
+  height: 24px;
+  border: solid 1px rgb(var(--v-border-color));
+  line-height: 0;
 }
 
 .categoria-section {
@@ -395,9 +357,5 @@ input[type="text"] {
   flex-wrap: wrap;
   margin-top: 5px;
   margin-left: 24px;
-}
-
-.cantidad-input {
-  max-width: 60px;
 }
 </style>

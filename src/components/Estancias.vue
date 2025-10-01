@@ -96,13 +96,6 @@ watch(
 </script>
 
 <template>
-  <!-- Puedes descomentar esto para ver el desglose -->
-  <!-- <div class="total-presupuesto text-h6">
-    <p>Total Elementos: {{ formatoMoneda(detallesPresupuesto.totalElementos) }}</p>
-    <p>Total Costes Base (solo estancias activas): {{ formatoMoneda(detallesPresupuesto.totalCostesBase) }}</p>
-    <p>TOTAL PRESUPUESTO: {{ formatoMoneda(totalGlobalPresupuesto) }}</p>
-  </div> -->
-
   <Estancia
     :clave="`salon`"
     :nombre="`Salón`"

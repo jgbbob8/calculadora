@@ -64,9 +64,12 @@ const formatearEuros = (valor) => {
           />
 
           <div
-            class="total-presupuesto text-h6 pt-2 pb-2 pl-5 pr-5 bg-grey-darken-3 rounded text-grey-lighten-1"
+            class="total-presupuesto bg-surface-light d-flex justify-space-between text-h6 pt-2 pb-2 pl-4 pr-4 rounded"
           >
-            <p>TOTAL GLOBAL: {{ formatearEuros(totalPresupuesto) }}</p>
+            <p>TOTAL GLOBAL:</p>
+            <p>
+              {{ formatearEuros(totalPresupuesto) }}
+            </p>
           </div>
         </v-row>
 
@@ -98,10 +101,7 @@ const formatearEuros = (valor) => {
 </template>
 
 <style>
-@media (width<467px) {
-  .total-presupuesto {
-    margin-top: 0.9em;
-    padding-inline: 2.3em !important;
-  }
+.total-presupuesto {
+  width: 275px;
 }
 </style>
