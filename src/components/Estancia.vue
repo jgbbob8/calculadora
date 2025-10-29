@@ -242,33 +242,38 @@ watch(
                 sm="6"
                 v-for="elemento in elementos"
                 :key="elemento.concepto"
-                class="d-flex ga-2"
+                class="elemento-wrapper d-flex ga-2"
               >
                 <div class="elemento flex justify-space-between w-100">
                   <label class="checkbox-label">
+                    <p
+                      :class="[
+                        'elemento-nombre',
+                        elementosDeshabilitados[elemento.concepto]
+                          ? 'elemento-nombre--disabled'
+                          : '',
+                      ]"
+                    >
+                      {{ elemento.concepto
+                      }}<span class="text-orange opacity-80"> | </span
+                      >{{ elemento.unidad }}
+                    </p>
                     <input
                       type="checkbox"
                       v-model="elementosSeleccionados[elemento.concepto]"
                       :disabled="elementosDeshabilitados[elemento.concepto]"
                       @change="manejarCambioSeleccion(elemento)"
-                      class="checkbox-input"
+                      :class="[
+                        'checkbox-input',
+                        elementosSeleccionados[elemento.concepto]
+                          ? 'checkbox-input--selected'
+                          : '',
+                      ]"
                     />
-                    <p class="elemento-nombre">
-                      {{ elemento.concepto
-                      }}<span class="text-orange opacity-80"> | </span
-                      >{{ elemento.unidad }}
-                    </p>
                   </label>
                 </div>
 
                 <div v-if="elementosSeleccionados[elemento.concepto]">
-                  <!-- <v-text-field
-                    variant="outlined"
-                    type="number"
-                    min="0"
-                    single-line
-                    v-model="cantidades[elemento.concepto]"
-                  ></v-text-field> -->
                   <input
                     type="number"
                     min="0"
@@ -287,6 +292,24 @@ watch(
 <style>
 .elemento-nombre {
   min-height: 25px;
+}
+
+@media (width > 1280px) {
+  .elemento-wrapper:not(:nth-child(3n)) {
+    border-inline-end: #999 1px solid;
+  }
+}
+
+@media (width <= 1280px) {
+  .elemento-wrapper:not(:nth-child(2n)) {
+    border-inline-end: #999 1px solid;
+  }
+}
+
+@media (width <= 600px) {
+  .elemento-wrapper {
+    border-inline-end: none !important;
+  }
 }
 
 .v-expansion-panel-title {
@@ -310,7 +333,7 @@ input[type="text"] {
   border-radius: 4px;
   width: 50px;
   height: 24px;
-  border: solid 1px rgb(var(--v-border-color));
+  border: solid 1px #999;
   line-height: 0;
 }
 
@@ -332,18 +355,19 @@ input[type="text"] {
 .checkbox-input {
   width: 16px;
   height: 16px;
-  margin-top: 3px;
+  margin-top: 4px;
   cursor: pointer;
+  margin-left: auto;
+  margin-right: 60px;
 }
 
-/* Opcional: Estilo para checkboxes deshabilitados */
-.checkbox-input:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+.checkbox-input--selected {
+  accent-color: #fff;
+  margin-right: 0;
 }
 
 /* Opcional: Estilo para el texto de elementos deshabilitados */
-.checkbox-input:disabled + p.elemento-nombre {
+.elemento-nombre--disabled {
   opacity: 0.6;
   color: #999;
 }
