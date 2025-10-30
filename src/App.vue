@@ -37,35 +37,13 @@ const formatearEuros = (valor) => {
       <v-container>
         <Header />
 
-        <v-row
-          class="ma-0 ga-4 mb-8 rounded text-center align-end justify-md-space-between justify-center"
-        >
-          <BtnToggle
-            estancia="Salón / Comedor"
-            @toggle="(valor) => toggleState('salon', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('salon', valor)"
-          />
-          <BtnToggle
-            estancia="Cocina"
-            @toggle="(valor) => toggleState('cocina', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('cocina', valor)"
-          />
-          <BtnToggleMultiple
-            estancia="Baños"
-            maximum="3"
-            @toggle="(valor) => toggleState('bano', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('bano', valor)"
-          />
-          <BtnToggleMultiple
-            estancia="Habitaciones"
-            maximum="5"
-            @toggle="(valor) => toggleState('habit', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('habit', valor)"
-          />
+        <v-row class="ma-0 ga-4 mb-8 rounded text-center align-end justify-md-space-between justify-center">
+          <BtnToggle estancia="Salón / Comedor" @toggle="(valor) => toggleState('salon', valor)" @confirmToggle="(valor) => handleConfirmToggle('salon', valor)" />
+          <BtnToggle estancia="Cocina" @toggle="(valor) => toggleState('cocina', valor)" @confirmToggle="(valor) => handleConfirmToggle('cocina', valor)" />
+          <BtnToggleMultiple estancia="Baños" maximum="3" @toggle="(valor) => toggleState('bano', valor)" @confirmToggle="(valor) => handleConfirmToggle('bano', valor)" />
+          <BtnToggleMultiple estancia="Habitaciones" maximum="5" @toggle="(valor) => toggleState('habit', valor)" @confirmToggle="(valor) => handleConfirmToggle('habit', valor)" />
 
-          <div
-            class="total-presupuesto bg-surface-light d-flex justify-space-between text-h6 pt-2 pb-2 pl-4 pr-4 rounded"
-          >
+          <div class="total-presupuesto bg-surface-light d-flex justify-space-between text-h6 pt-2 pb-2 pl-4 pr-4 rounded">
             <p>TOTAL GLOBAL:</p>
             <p>
               {{ formatearEuros(totalPresupuesto) }}

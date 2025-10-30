@@ -142,30 +142,21 @@ const datosReforma = {
       precio: 300,
       unidad: "Ud",
       ubicaciones: ["bano"],
-      sustitutivo: [
-        "Inodoro gama media (Roca The Gap)",
-        "Inodoro suspendido (Geberit / Roca)",
-      ],
+      sustitutivo: ["Inodoro gama media (Roca The Gap)", "Inodoro suspendido (Geberit / Roca)"],
     },
     {
       concepto: "Inodoro gama media (Roca The Gap)",
       precio: 550,
       unidad: "Ud",
       ubicaciones: ["bano"],
-      sustitutivo: [
-        "Inodoro gama básica (Roca Victoria)",
-        "Inodoro suspendido (Geberit / Roca)",
-      ],
+      sustitutivo: ["Inodoro gama básica (Roca Victoria)", "Inodoro suspendido (Geberit / Roca)"],
     },
     {
       concepto: "Inodoro suspendido (Geberit / Roca)",
       precio: 800,
       unidad: "Ud",
       ubicaciones: ["bano"],
-      sustitutivo: [
-        "Inodoro gama básica (Roca Victoria)",
-        "Inodoro gama media (Roca The Gap)",
-      ],
+      sustitutivo: ["Inodoro gama básica (Roca Victoria)", "Inodoro gama media (Roca The Gap)"],
     },
     {
       concepto: "Plato de ducha 120x80x3 resina",

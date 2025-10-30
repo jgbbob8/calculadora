@@ -1,8 +1,7 @@
 export const datosEstancia = [
   {
     estancia: "cocina",
-    descricion:
-      "Muebles modulares con puertas postformadas acabadas en color blanco con finger pull",
+    descricion: "Muebles modulares con puertas postformadas acabadas en color blanco con finger pull",
     costeBase: 1200,
   },
   { estancia: "salon", descricion: "", costeBase: 600 },
