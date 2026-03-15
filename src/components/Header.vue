@@ -45,6 +45,7 @@ const { theme, toggleTheme } = useCustomTheme();
 
 .btn-toogle {
   text-align: right;
+  margin: 0 7px 5px 0;
 }
 .logo {
   text-align: center;
