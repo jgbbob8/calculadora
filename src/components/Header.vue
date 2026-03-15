@@ -19,13 +19,11 @@ const { theme, toggleTheme } = useCustomTheme();
         v-if="theme.global.name.value === 'dark'"
         @click="toggleTheme"
         icon="$radioOff"
-        color="text-terciary"
       />
       <v-icon
         v-if="theme.global.name.value === 'light'"
         @click="toggleTheme"
         icon="$radioOn"
-        color="text-terciary"
       />
     </div>
   </div>
@@ -46,6 +44,7 @@ const { theme, toggleTheme } = useCustomTheme();
 .btn-toogle {
   text-align: right;
   margin: 0 7px 5px 0;
+  color: hsl(from rgb(var(--v-theme-terciary)) h s 62%);
 }
 .logo {
   text-align: center;

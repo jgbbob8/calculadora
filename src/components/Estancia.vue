@@ -295,13 +295,15 @@ watch(
 
 @media (width > 1280px) {
   .elemento-wrapper:not(:nth-child(3n)) {
-    border-inline-end: hsl(from var(--base-n) h s l / 0.25) 1px solid;
+    border-inline-end: hsl(from rgb(var(--v-theme-base-n)) h s l / 0.25) 1px
+      solid;
   }
 }
 
 @media (width <= 1280px) {
   .elemento-wrapper:not(:nth-child(2n)) {
-    border-inline-end: hsl(from var(--base-n) h s l / 0.25) 1px solid;
+    border-inline-end: hsl(from rgb(var(--v-theme-base-n)) h s l / 0.25) 1px
+      solid;
   }
 }
 
@@ -318,17 +320,17 @@ watch(
 
 .v-expansion-panel-text__wrapper {
   padding: 0 1.25em !important;
-  background-color: var(--base-l-2) !important;
+  background-color: rgb(var(--v-theme-base-l-2)) !important;
 }
 
 .v-expansion-panel-text {
-  background: var(--base-l-1);
+  background: rgb(var(--v-theme-base-l-1));
 }
 </style>
 
 <style>
 .v-expansion-panel-text {
-  border-top: solid 1px hsl(from var(--base-n) h s l / 0.5);
+  border-top: solid 1px hsl(from rgb(var(--v-theme-base-n)) h s l / 0.5);
 }
 
 input[type="number"],
@@ -337,12 +339,12 @@ input[type="text"] {
   border-radius: 4px;
   width: 50px;
   height: 24px;
-  border: solid 1px hsl(from var(--base-n) h s l / 0.25);
+  border: solid 1px hsl(from rgb(var(--v-theme-base-n)) h s l / 0.25);
   line-height: 0;
 }
 
 .categoria-section {
-  border-bottom: solid 1px hsl(from var(--base-n) h s l / 0.25);
+  border-bottom: solid 1px hsl(from rgb(var(--v-theme-base-n)) h s l / 0.25);
 }
 
 .categoria-section:last-child {
@@ -373,7 +375,7 @@ input[type="text"] {
 /* Opcional: Estilo para el texto de elementos deshabilitados */
 .elemento-nombre--disabled {
   opacity: 0.6;
-  color: hsl(from var(--base-n) h s l / 0.25);
+  color: hsl(from rgb(var(--v-theme-base-n)) h s l / 0.25);
 }
 
 .cantidad-control,
