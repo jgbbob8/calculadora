@@ -16,7 +16,7 @@ watch(verifi, (nuevoValor, viejoValor) => {
 
 <template>
   <div class="btn-toggle">
-    <p class="pb-1 text-grey">{{ estancia }}</p>
+    <p class="pb-1 text-base-d-1">{{ estancia }}</p>
     <v-btn-toggle v-model="verifi" rounded="6" mandatory>
       <v-btn :value="false" color="red">NO</v-btn>
       <v-btn :value="true" color="success">SI</v-btn>

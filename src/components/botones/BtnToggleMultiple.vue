@@ -34,13 +34,23 @@ const decrementar = () => {
 
 <template>
   <div class="btn-toggle">
-    <p class="pb-1 text-grey">{{ estancia }}</p>
+    <p class="pb-1 text-base-d-1">{{ estancia }}</p>
     <v-btn-toggle rounded="6">
-      <v-btn size="x-small" icon="mdi-chevron-left" @click="decrementar" :disabled="verifi === 'no'" />
+      <v-btn
+        size="x-small"
+        icon="mdi-chevron-left"
+        @click="decrementar"
+        :disabled="verifi === 'no'"
+      />
       <v-btn :base-color="verifi === 'no' ? 'red' : 'success'" mandatory>
         {{ verifi === "no" ? "NO" : verifi }}
       </v-btn>
-      <v-btn size="x-small" icon="mdi-chevron-right" @click="incrementar" :disabled="verifi === maxim" />
+      <v-btn
+        size="x-small"
+        icon="mdi-chevron-right"
+        @click="incrementar"
+        :disabled="verifi === maxim"
+      />
     </v-btn-toggle>
   </div>
 </template>

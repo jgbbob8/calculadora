@@ -9,11 +9,13 @@ const { theme, toggleTheme } = useCustomTheme();
       v-if="theme.global.name.value === 'dark'"
       @click="toggleTheme"
       icon="$radioOff"
+      color="text-terciary"
     />
     <v-icon
       v-if="theme.global.name.value === 'light'"
       @click="toggleTheme"
       icon="$radioOn"
+      color="text-terciary"
     />
   </div>
 
@@ -37,6 +39,6 @@ const { theme, toggleTheme } = useCustomTheme();
   margin-top: -1em;
 }
 .logo img {
-  max-width: 250px;
+  max-width: 192px;
 }
 </style>

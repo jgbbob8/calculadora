@@ -38,7 +38,7 @@ const obtenerElementosPorUbicacionOrganizados = (ubicacion) => {
 
   Object.entries(datosReforma).forEach(([nombreCategoria, categoria]) => {
     const elementosDeCategoria = categoria.filter((elemento) =>
-      elemento.ubicaciones.includes(ubicacion)
+      elemento.ubicaciones.includes(ubicacion),
     );
 
     if (elementosDeCategoria.length > 0) {
@@ -63,7 +63,7 @@ const nombresCategorias = {
 
 // Obtener elementos de ESTA estancia organizados por categorías
 const elementosEstanciaOrganizados = obtenerElementosPorUbicacionOrganizados(
-  estancia.value
+  estancia.value,
 );
 
 // Estado para elementos seleccionados y cantidades de ESTA estancia
@@ -115,7 +115,7 @@ watch(
       coste_base: coste_base.value,
     });
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // Watch simplificado para cuando la estancia se oculta
@@ -126,7 +126,7 @@ watch(
     if (viejoValor && !nuevoValor) {
       resetearTodosLosValores();
     }
-  }
+  },
 );
 </script>
 
@@ -134,7 +134,7 @@ watch(
   <v-expansion-panels>
     <v-expansion-panel
       v-if="visible"
-      class="bg-surface-light mb-4 rounded mx-auto"
+      class="bg-bg-base-l-2 mb-4 rounded mx-auto"
     >
       <template v-slot:title>
         <div class="d-flex align-center justify-space-between w-100">
@@ -142,12 +142,14 @@ watch(
             <h2 class="text-h6 text-sm-h6 text-white">
               {{ nombre }}
             </h2>
-            <p class="text-grey">
+            <p class="text-base-d-1">
               {{ estancia_descripcion }}
             </p>
           </div>
-          <div class="w-fit text-left text-grey">
-            <p class="whitespace-nowrap pl-4 pr-4 text-subtitle-1 text-grey">
+          <div class="w-fit text-left text-base-d-1">
+            <p
+              class="whitespace-nowrap pl-4 pr-4 text-subtitle-1 text-base-d-1"
+            >
               TOTAL: {{ formatearEuros(totalPresupuesto) }}
             </p>
           </div>
@@ -155,7 +157,7 @@ watch(
       </template>
       <template v-slot:text>
         <div class="elementos-estancia pb-4">
-          <p class="w-100 text-center text-grey mt-4">
+          <p class="w-100 text-center text-base-d-1 mt-4">
             Contenedor, demolición, subida/bajada materiales y limpieza final
             estancia
             <strong class="text-red">{{ formatearEuros(coste_base) }}</strong>
@@ -165,7 +167,7 @@ watch(
             :key="nombreCategoria"
             class="categoria-section pt-4 pb-4"
           >
-            <h6 class="text-orange text-uppercase text-subtitle-1 pb-2">
+            <h6 class="text-primary text-uppercase text-subtitle-1 pb-2">
               {{ nombresCategorias[nombreCategoria] || nombreCategoria }}
             </h6>
 
@@ -186,7 +188,7 @@ watch(
                     />
                     <p class="elemento-nombre">
                       {{ elemento.concepto
-                      }}<span class="text-orange opacity-80"> | </span
+                      }}<span class="text-primary opacity-80"> | </span
                       >{{ elemento.unidad }}
                     </p>
                   </label>

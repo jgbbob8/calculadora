@@ -59,7 +59,7 @@ const elementosEstanciaOrganizados = computed(() => {
   const elementosOrganizados = {};
   Object.entries(datosReforma).forEach(([nombreCategoria, categoria]) => {
     const elementosDeCategoria = categoria.filter((elemento) =>
-      elemento.ubicaciones.includes(estancia.value)
+      elemento.ubicaciones.includes(estancia.value),
     );
     if (elementosDeCategoria.length > 0) {
       elementosOrganizados[nombreCategoria] = elementosDeCategoria;
@@ -133,7 +133,7 @@ const manejarCambioSeleccion = (elementoActual) => {
         const otrosSustitutosActivos = item.sustitutivo.some(
           (otroSustitutoConcepto) =>
             otroSustitutoConcepto !== elementoActual.concepto &&
-            elementosSeleccionados.value[otroSustitutoConcepto]
+            elementosSeleccionados.value[otroSustitutoConcepto],
         );
 
         if (!otrosSustitutosActivos) {
@@ -179,7 +179,7 @@ watch(
       coste_base: coste_base.value,
     });
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // Watch simplificado para cuando la estancia se oculta
@@ -190,16 +190,13 @@ watch(
     if (viejoValor && !nuevoValor) {
       resetearTodosLosValores();
     }
-  }
+  },
 );
 </script>
 
 <template>
   <v-expansion-panels>
-    <v-expansion-panel
-      v-if="visible"
-      class="bg-surface-light mb-4 rounded mx-auto"
-    >
+    <v-expansion-panel v-if="visible" class="bg-base-l-2 mb-4 rounded mx-auto">
       <template v-slot:title>
         <div class="d-flex align-center justify-space-between w-100">
           <div class="d-flex flex-column align-left justify-space-between">
@@ -215,23 +212,25 @@ watch(
         </div>
       </template>
       <div class="pt-2 pb-2 pl-4 pr-4" v-if="estancia_descripcion">
-        <p class="text-grey">
+        <p class="text-base-d-1">
           {{ estancia_descripcion }}
         </p>
       </div>
       <template v-slot:text>
         <div class="elementos-estancia pb-4">
-          <p class="w-100 text-right text-grey mt-4 pr-9">
-            Contenedor, demolición, subida/bajada materiales y limpieza final
-            estancia
-            <strong class="text-red">{{ formatearEuros(coste_base) }}</strong>
+          <p class="w-100 text-right text-base-d-1 mt-4 pr-9">
+            <span class="text-red"
+              >IMPORTANTE: Contenedor, demolición, subida/bajada materiales y
+              limpieza final estancia
+            </span>
+            <span class="text-base-d-2"> {{ formatearEuros(coste_base) }}</span>
           </p>
           <div
             v-for="(elementos, nombreCategoria) in elementosEstanciaOrganizados"
             :key="nombreCategoria"
             class="categoria-section pt-4 pb-4"
           >
-            <h6 class="text-orange text-uppercase text-subtitle-1">
+            <h6 class="text-primary text-uppercase text-subtitle-1">
               {{ nombresCategorias[nombreCategoria] || nombreCategoria }}
             </h6>
 
@@ -255,7 +254,7 @@ watch(
                       ]"
                     >
                       {{ elemento.concepto
-                      }}<span class="text-orange opacity-80"> | </span
+                      }}<span class="text-primary opacity-80"> | </span
                       >{{ elemento.unidad }}
                     </p>
                     <input
@@ -289,20 +288,20 @@ watch(
   </v-expansion-panels>
 </template>
 
-<style>
+<style scoped>
 .elemento-nombre {
   min-height: 25px;
 }
 
 @media (width > 1280px) {
   .elemento-wrapper:not(:nth-child(3n)) {
-    border-inline-end: #999 1px solid;
+    border-inline-end: hsl(from var(--base-n) h s l / 0.25) 1px solid;
   }
 }
 
 @media (width <= 1280px) {
   .elemento-wrapper:not(:nth-child(2n)) {
-    border-inline-end: #999 1px solid;
+    border-inline-end: hsl(from var(--base-n) h s l / 0.25) 1px solid;
   }
 }
 
@@ -319,26 +318,31 @@ watch(
 
 .v-expansion-panel-text__wrapper {
   padding: 0 1.25em !important;
+  background-color: var(--base-l-2) !important;
 }
 
-button.v-expansion-panel-title.v-expansion-panel-title--active {
-  background-color: rgb(var(--v-theme-surface)) !important;
+.v-expansion-panel-text {
+  background: var(--base-l-1);
 }
 </style>
 
-<style scoped>
+<style>
+.v-expansion-panel-text {
+  border-top: solid 1px hsl(from var(--base-n) h s l / 0.5);
+}
+
 input[type="number"],
 input[type="text"] {
   padding: 1px 0 0 4px;
   border-radius: 4px;
   width: 50px;
   height: 24px;
-  border: solid 1px #999;
+  border: solid 1px hsl(from var(--base-n) h s l / 0.25);
   line-height: 0;
 }
 
 .categoria-section {
-  border-bottom: solid 1px #666;
+  border-bottom: solid 1px hsl(from var(--base-n) h s l / 0.25);
 }
 
 .categoria-section:last-child {
@@ -369,7 +373,7 @@ input[type="text"] {
 /* Opcional: Estilo para el texto de elementos deshabilitados */
 .elemento-nombre--disabled {
   opacity: 0.6;
-  color: #999;
+  color: hsl(from var(--base-n) h s l / 0.25);
 }
 
 .cantidad-control,

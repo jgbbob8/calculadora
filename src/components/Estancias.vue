@@ -91,7 +91,7 @@ watch(
   (newValue) => {
     emit("updateTotal", newValue);
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 

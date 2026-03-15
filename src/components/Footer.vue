@@ -1,10 +1,8 @@
 <template>
-  <v-footer height="40" app class="margin-auto">
-    <div class="text-caption text-disabled">
-      &copy; {{ new Date().getFullYear() }}
-      <span class="d-none d-sm-inline-block text-uppercase mx-2"
-        >Consnaval</span
-      >
+  <v-footer app class="margin-auto pl-8 pt-4 pb-4">
+    <div class="text-[var(--base-d-1)]">
+      Copyright &copy; {{ new Date().getFullYear() }}
+      <span class="d-none d-sm-inline-block mx-2">• Consnaval</span>
       |
       <a
         class="text-decoration-none on-surface mx-2"
