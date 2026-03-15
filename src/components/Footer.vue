@@ -1,11 +1,11 @@
 <template>
-  <v-footer app class="margin-auto pl-8 pt-4 pb-4">
-    <div class="text-[var(--base-d-1)]">
-      Copyright &copy; {{ new Date().getFullYear() }}
+  <v-footer class="margin-auto pl-8 pt-4 pb-4 bg-base-l-2 footer">
+    <div class="info text-base-d-1">
+      Copyright &copy;{{ new Date().getFullYear() }}
       <span class="d-none d-sm-inline-block mx-2">• Consnaval</span>
       |
       <a
-        class="text-decoration-none on-surface mx-2"
+        class="text-decoration-none mx-2 text-base-d-1"
         href="mailto:info@consnaval.com"
         rel="noopener noreferrer"
         target="_blank"
@@ -14,8 +14,8 @@
       </a>
       |
       <a
-        class="text-decoration-none on-surface mx-2"
-        href="phone:+34963354420"
+        class="text-decoration-none mx-2 text-base-d-1"
+        href="tel:+34963354420"
         rel="noopener noreferrer"
         target="_blank"
         >96 335 44 20</a
@@ -24,6 +24,18 @@
   </v-footer>
 </template>
 
-<script setup></script>
+<style scoped>
+.footer {
+  border-top: 1px solid rgb(var(--v-theme-base-l-1));
+}
 
-<style scoped lang="sass"></style>
+.info {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.info a:hover {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+</style>

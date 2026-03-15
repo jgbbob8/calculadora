@@ -32,51 +32,48 @@ const formatearEuros = (valor) => {
 </script>
 
 <template>
-  <v-app>
-    <v-main>
-      <v-container>
-        <Header />
+  <v-app class="app-shell">
+    <section class="app-content">
+      <Header />
 
-        <v-row
-          class="ma-0 ga-4 mb-8 rounded text-center align-end justify-md-space-between justify-center"
+      <v-row
+        class="ma-0 ga-4 mb-8 rounded text-center align-end justify-md-space-between justify-center row"
+      >
+        <BtnToggle
+          estancia="Salón / Comedor"
+          @toggle="(valor) => toggleState('salon', valor)"
+          @confirmToggle="(valor) => handleConfirmToggle('salon', valor)"
+        />
+        <BtnToggle
+          estancia="Cocina"
+          @toggle="(valor) => toggleState('cocina', valor)"
+          @confirmToggle="(valor) => handleConfirmToggle('cocina', valor)"
+        />
+        <BtnToggleMultiple
+          estancia="Baños"
+          maximum="3"
+          @toggle="(valor) => toggleState('bano', valor)"
+          @confirmToggle="(valor) => handleConfirmToggle('bano', valor)"
+        />
+        <BtnToggleMultiple
+          estancia="Habitaciones"
+          maximum="5"
+          @toggle="(valor) => toggleState('habit', valor)"
+          @confirmToggle="(valor) => handleConfirmToggle('habit', valor)"
+        />
+
+        <div
+          class="total-presupuesto bg-base-l-2 d-flex justify-space-between text-h6 pt-2 pb-2 pl-4 pr-4 rounded"
         >
-          <BtnToggle
-            estancia="Salón / Comedor"
-            @toggle="(valor) => toggleState('salon', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('salon', valor)"
-          />
-          <BtnToggle
-            estancia="Cocina"
-            @toggle="(valor) => toggleState('cocina', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('cocina', valor)"
-          />
-          <BtnToggleMultiple
-            estancia="Baños"
-            maximum="3"
-            @toggle="(valor) => toggleState('bano', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('bano', valor)"
-          />
-          <BtnToggleMultiple
-            estancia="Habitaciones"
-            maximum="5"
-            @toggle="(valor) => toggleState('habit', valor)"
-            @confirmToggle="(valor) => handleConfirmToggle('habit', valor)"
-          />
+          <p>TOTAL GLOBAL:</p>
+          <p>
+            {{ formatearEuros(totalPresupuesto) }}
+          </p>
+        </div>
+      </v-row>
 
-          <div
-            class="total-presupuesto bg-base-l-2 d-flex justify-space-between text-h6 pt-2 pb-2 pl-4 pr-4 rounded"
-          >
-            <p>TOTAL GLOBAL:</p>
-            <p>
-              {{ formatearEuros(totalPresupuesto) }}
-            </p>
-          </div>
-        </v-row>
-
-        <Estancias :state="state" @updateTotal="handleTotalUpdate" />
-      </v-container>
-    </v-main>
-    <AppFooter />
+      <Estancias :state="state" @updateTotal="handleTotalUpdate" />
+    </section>
 
     <!-- <v-dialog v-model="showConfirmDialog" max-width="500">
       <v-card>
@@ -98,6 +95,7 @@ const formatearEuros = (valor) => {
       </v-card>
     </v-dialog> -->
   </v-app>
+  <AppFooter />
 </template>
 
 <style>
@@ -115,16 +113,15 @@ const formatearEuros = (valor) => {
   --base-l-1: hsla(0, 0%, 65%, 1);
   --base-l-2: hsla(0, 0%, 80%, 1);
   --base-l-3: hsla(0, 0%, 95%, 1);
+
   --base-l-4: hsla(0, 0%, 100%, 1);
   &.dark {
     --terciary: #f39200;
     --primary: #31a9e1;
-    --shadow: rgb(255 255 255/0.15);
     --base-l-4: hsla(0, 0%, 0%, 1);
     --base-l-3: hsla(0, 0%, 5%, 1);
     --base-l-2: hsla(0, 0%, 20%, 1);
-    --base-l-1: hsla(0, 0%, 35%, 1);
-    --base-n: hsla(0, 0%, 50%, 1);
+    --base-l-1: rgb(29, 3, 3);
     --base-d-1: hsla(0, 0%, 65%, 1);
     --base-d-2: hsla(0, 0%, 80%, 1);
     --base-d-3: hsla(0, 0%, 95%, 1);
@@ -139,5 +136,20 @@ const formatearEuros = (valor) => {
 
 .total-presupuesto {
   width: 275px;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.v-application__wrap {
+  padding-inline: clamp(1.25rem, calc(1.81vw + 0.89rem), 2.47rem);
 }
 </style>
