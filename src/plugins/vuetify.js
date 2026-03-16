@@ -14,7 +14,8 @@ import { createVuetify } from "vuetify";
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 const getInitialTheme = () => {
   try {
-    const param = new URLSearchParams(window.location.search).get("theme");
+    const params = new URLSearchParams(window.location.search);
+    const param = params.get("color-scheme") ?? params.get("theme");
     if (param === "dark" || param === "moon") return "dark";
     if (param === "light" || param === "sun") return "light";
     const scheme = localStorage.getItem("color-scheme");

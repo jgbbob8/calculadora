@@ -29,11 +29,13 @@ const readStoredTheme = () => {
 
 const readUrlTheme = () => {
   if (typeof window === "undefined") return null;
-  const param = new URLSearchParams(window.location.search).get("theme");
+  const params = new URLSearchParams(window.location.search);
+  const param = params.get("color-scheme") ?? params.get("theme");
   const normalized = normalizeStoredTheme(param);
   if (normalized) {
     // Limpia el param de la URL sin recargar la página
     const url = new URL(window.location.href);
+    url.searchParams.delete("color-scheme");
     url.searchParams.delete("theme");
     window.history.replaceState({}, "", url.toString());
   }
