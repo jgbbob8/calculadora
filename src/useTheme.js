@@ -67,7 +67,8 @@ export function useCustomTheme() {
       ? "dark"
       : "light";
 
-    setTheme(storedTheme ?? preferredTheme, false);
+    // Si no había valor guardado, lo persistimos ahora para futuras cargas
+    setTheme(storedTheme ?? preferredTheme, storedTheme === null);
 
     if (!isInitialized) {
       mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
