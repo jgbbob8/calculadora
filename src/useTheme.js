@@ -27,6 +27,19 @@ const readStoredTheme = () => {
   return normalizeStoredTheme(localStorage.getItem(STORAGE_KEY));
 };
 
+const readUrlTheme = () => {
+  if (typeof window === "undefined") return null;
+  const param = new URLSearchParams(window.location.search).get("theme");
+  const normalized = normalizeStoredTheme(param);
+  if (normalized) {
+    // Limpia el param de la URL sin recargar la página
+    const url = new URL(window.location.href);
+    url.searchParams.delete("theme");
+    window.history.replaceState({}, "", url.toString());
+  }
+  return normalized;
+};
+
 const applyDocumentScheme = (themeName) => {
   if (typeof document === "undefined") {
     return;
@@ -55,13 +68,14 @@ export function useCustomTheme() {
     }
 
     const storedTheme = readStoredTheme();
+    const urlTheme = readUrlTheme();
     const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
       .matches
       ? "dark"
       : "light";
 
-    // Si no había valor guardado, lo persistimos ahora para futuras cargas
-    setTheme(storedTheme ?? preferredTheme, storedTheme === null);
+    // Prioridad: URL param > localStorage > preferencia del sistema
+    setTheme(urlTheme ?? storedTheme ?? preferredTheme, true);
 
     if (!isInitialized) {
       mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");

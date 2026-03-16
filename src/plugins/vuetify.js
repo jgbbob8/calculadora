@@ -14,10 +14,12 @@ import { createVuetify } from "vuetify";
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 const getInitialTheme = () => {
   try {
+    const param = new URLSearchParams(window.location.search).get("theme");
+    if (param === "dark" || param === "moon") return "dark";
+    if (param === "light" || param === "sun") return "light";
     const scheme = localStorage.getItem("color-scheme");
     if (scheme === "dark" || scheme === "moon") return "dark";
     if (scheme === "light" || scheme === "sun") return "light";
-    // Sin valor guardado: usar preferencia del sistema
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
