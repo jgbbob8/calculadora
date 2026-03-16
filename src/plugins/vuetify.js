@@ -17,13 +17,13 @@ const getInitialTheme = () => {
     const scheme = localStorage.getItem("color-scheme");
     if (scheme === "dark" || scheme === "moon") return "dark";
     if (scheme === "light" || scheme === "sun") return "light";
-    const legacy = localStorage.getItem("theme");
-    if (legacy === "dark" || legacy === "moon") return "dark";
-    if (legacy === "light" || legacy === "sun") return "light";
+    // Sin valor guardado: usar preferencia del sistema
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   } catch {
-    // localStorage no disponible
+    return "dark";
   }
-  return "dark";
 };
 
 export default createVuetify({
