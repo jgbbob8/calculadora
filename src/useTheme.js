@@ -61,11 +61,6 @@ export function useCustomTheme() {
       return;
     }
 
-    if (isInitialized) {
-      applyDocumentScheme(theme.global.name.value);
-      return;
-    }
-
     const storedTheme = readStoredTheme();
     const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
       .matches
@@ -74,16 +69,18 @@ export function useCustomTheme() {
 
     setTheme(storedTheme ?? preferredTheme, false);
 
-    mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", (event) => {
-      if (localStorage.getItem(STORAGE_KEY)) {
-        return;
-      }
+    if (!isInitialized) {
+      mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", (event) => {
+        if (localStorage.getItem(STORAGE_KEY)) {
+          return;
+        }
 
-      setTheme(event.matches ? "dark" : "light", false);
-    });
+        setTheme(event.matches ? "dark" : "light", false);
+      });
 
-    isInitialized = true;
+      isInitialized = true;
+    }
   };
 
   initTheme();

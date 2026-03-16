@@ -12,9 +12,23 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
+const getInitialTheme = () => {
+  try {
+    const scheme = localStorage.getItem("color-scheme");
+    if (scheme === "dark" || scheme === "moon") return "dark";
+    if (scheme === "light" || scheme === "sun") return "light";
+    const legacy = localStorage.getItem("theme");
+    if (legacy === "dark" || legacy === "moon") return "dark";
+    if (legacy === "light" || legacy === "sun") return "light";
+  } catch {
+    // localStorage no disponible
+  }
+  return "dark";
+};
+
 export default createVuetify({
   theme: {
-    defaultTheme: "dark",
+    defaultTheme: getInitialTheme(),
     themes: {
       light: {
         colors: {
