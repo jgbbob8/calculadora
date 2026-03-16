@@ -2,6 +2,7 @@ import { computed } from "vue";
 import { useTheme } from "vuetify";
 
 const STORAGE_KEY = "color-scheme";
+const LEGACY_STORAGE_KEY = "theme";
 let isInitialized = false;
 let mediaQuery;
 
@@ -18,6 +19,19 @@ const normalizeStoredTheme = (value) => {
 };
 
 const themeToScheme = (themeName) => (themeName === "dark" ? "moon" : "sun");
+
+const readStoredTheme = () => {
+  if (typeof localStorage === "undefined") {
+    return null;
+  }
+
+  const schemeValue = normalizeStoredTheme(localStorage.getItem(STORAGE_KEY));
+  if (schemeValue) {
+    return schemeValue;
+  }
+
+  return normalizeStoredTheme(localStorage.getItem(LEGACY_STORAGE_KEY));
+};
 
 const applyDocumentScheme = (themeName) => {
   if (typeof document === "undefined") {
@@ -38,6 +52,7 @@ export function useCustomTheme() {
 
     if (save && typeof localStorage !== "undefined") {
       localStorage.setItem(STORAGE_KEY, themeToScheme(nextTheme));
+      localStorage.setItem(LEGACY_STORAGE_KEY, nextTheme);
     }
   };
 
@@ -51,7 +66,7 @@ export function useCustomTheme() {
       return;
     }
 
-    const storedTheme = normalizeStoredTheme(localStorage.getItem(STORAGE_KEY));
+    const storedTheme = readStoredTheme();
     const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
       .matches
       ? "dark"
